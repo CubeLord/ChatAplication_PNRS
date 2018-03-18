@@ -23,21 +23,21 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        Spinner spinner = (Spinner)findViewById(R.id.register_act_spinner);
+        Spinner spinner = (Spinner)findViewById(R.id.registerActSpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.genders, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        CalendarView calendarView = (CalendarView)findViewById(R.id.register_act_calendarview);
+        CalendarView calendarView = (CalendarView)findViewById(R.id.registerActCalendarview);
         calendarView.setDate(1514761200000L); //postavljanje datuma na 01.01.1996 - 820450800000L, a na 01.01.2018 - 1514761200000L
         calendarView.setMaxDate(Calendar.getInstance().getTimeInMillis());
 
-        final EditText username = (EditText)findViewById(R.id.register_act_edit_username);
-        final EditText password = (EditText)findViewById(R.id.register_act_edit_password);
-        final EditText email= (EditText)findViewById(R.id.register_act_edit_email);
-        final Button register_button = (Button)findViewById(R.id.register_act_button_register);
+        final EditText username = (EditText)findViewById(R.id.registerActEditUsername);
+        final EditText password = (EditText)findViewById(R.id.registerActEditPassword);
+        final EditText email= (EditText)findViewById(R.id.registerActEditEmail);
+        final Button registerButton = (Button)findViewById(R.id.registerActButtonRegister);
 
-        register_button.setOnClickListener(this);
+        registerButton.setOnClickListener(this);
 
         TextWatcher watcher = new TextWatcher() {
             @Override
@@ -55,10 +55,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         !(email.getText().toString().equals("")) &
                         (password.getText().toString().length() >= 6))
                 {
-                    register_button.setEnabled(true);
+                    registerButton.setEnabled(true);
                 } else
                 {
-                    register_button.setEnabled(false);
+                    registerButton.setEnabled(false);
                 }
             }
         };

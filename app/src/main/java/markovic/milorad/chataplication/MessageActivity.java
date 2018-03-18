@@ -16,8 +16,8 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
 
-        Button logout = (Button)findViewById(R.id.message_act_button_logout);
-        Button send = (Button)findViewById(R.id.message_act_button_send);
+        Button logout = (Button)findViewById(R.id.messageActButtonLogout);
+        Button send = (Button)findViewById(R.id.messageActButtonSend);
 
         send.setOnClickListener(this);
         logout.setOnClickListener(this);
@@ -27,12 +27,12 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId())
         {
-            case R.id.message_act_button_logout:
-                //Go to main_activity
+            case R.id.messageActButtonLogout:
+                //Go to mainActivity
                 Intent main = new Intent(this, MainActivity.class);
                 startActivity(main);
                 break;
-            case R.id.message_act_button_send:
+            case R.id.messageActButtonSend:
                 Toast.makeText(this,"Message is sent!", Toast.LENGTH_LONG).show();
 
                 break;

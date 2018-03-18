@@ -19,8 +19,8 @@ public class ContactsActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
 
-        TextView contact1 = (TextView)findViewById(R.id.contacts_act_textview_contact1);
-        Button logout = (Button) findViewById(R.id.contacts_act_button_logout);
+        TextView contact1 = (TextView)findViewById(R.id.contactsActTextviewContact1);
+        Button logout = (Button) findViewById(R.id.contactsActButtonLogout);
 
         contact1.setTypeface(null, Typeface.BOLD_ITALIC);
         contact1.setOnClickListener(this);
@@ -31,14 +31,14 @@ public class ContactsActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId())
         {
-            case R.id.contacts_act_textview_contact1:
+            case R.id.contactsActTextviewContact1:
                 Log.d("Contact", "Contact1 pressed!");
 
                 Intent messageAct = new Intent(this, MessageActivity.class);
                 startActivity(messageAct);
                 break;
 
-            case R.id.contacts_act_button_logout:
+            case R.id.contactsActButtonLogout:
                 Log.d("Button", "Logout button pressed!");
                 Intent mainActivity = new Intent(this, MainActivity.class);
                 startActivity(mainActivity);

@@ -19,7 +19,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/register_act_layout1"
+                android:id="@+id/registerActLayout1"
                 android:paddingBottom="16dp"
                 android:orientation="horizontal"
                 android:weightSum="2">
@@ -32,7 +32,7 @@
                     android:layout_weight="1"
                     android:selectAllOnFocus="true"
                     android:layout_marginRight="8dp"
-                    android:id="@+id/register_act_edit_username"/>
+                    android:id="@+id/registerActEditUsername"/>
 
 
                 <EditText
@@ -42,7 +42,7 @@
                     android:maxLines="1"
                     android:selectAllOnFocus="true"
                     android:layout_marginLeft="8dp"
-                    android:id="@+id/register_act_edit_first_name"
+                    android:id="@+id/registerActEditFirstName"
                     android:text="First name"/>
 
             </LinearLayout>
@@ -51,9 +51,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_below="@+id/register_act_layout1"
+                android:layout_below="@+id/registerActLayout1"
                 android:weightSum="2"
-                android:id="@+id/register_act_layout2">
+                android:id="@+id/registerActLayout2">
 
                 <EditText
                     android:layout_width="0dp"
@@ -64,7 +64,7 @@
                     android:selectAllOnFocus="true"
                     android:layout_marginRight="8dp"
                     android:inputType="textPassword"
-                    android:id="@+id/register_act_edit_password"/>
+                    android:id="@+id/registerActEditPassword"/>
                     <!--android:inputType="textPassword"-->
 
                 <EditText
@@ -74,7 +74,7 @@
                     android:maxLines="1"
                     android:selectAllOnFocus="true"
                     android:layout_marginLeft="8dp"
-                    android:id="@+id/register_act_edit_last_name"
+                    android:id="@+id/registerActEditLastName"
                     android:text="Last name"/>
 
             </LinearLayout>
@@ -82,13 +82,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/register_act_layout2"
-                android:id="@+id/register_act_layout3"
+                android:layout_below="@+id/registerActLayout2"
+                android:id="@+id/registerActLayout3"
                 android:paddingBottom="16dp"
                 android:weightSum="4">
 
                 <EditText
-                    android:id="@+id/register_act_edit_email"
+                    android:id="@+id/registerActEditEmail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
@@ -103,7 +103,7 @@
                     android:gravity="center"/>
 
                 <Spinner
-                    android:id="@+id/register_act_spinner"
+                    android:id="@+id/registerActSpinner"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"></Spinner>
@@ -112,8 +112,8 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/register_act_checkbox"
-                android:layout_below="@+id/register_act_layout3"
+                android:id="@+id/registerActCheckbox"
+                android:layout_below="@+id/registerActLayout3"
                 android:text="Accept Notifications"/>
 
             <Button
@@ -123,19 +123,19 @@
                 android:layout_alignParentBottom="true"
                 android:text="Register"
                 android:enabled="false"
-                android:id="@+id/register_act_button_register"/>
+                android:id="@+id/registerActButtonRegister"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Birth date"
-                android:layout_below="@+id/register_act_checkbox"/>
+                android:layout_below="@+id/registerActCheckbox"/>
 
             <CalendarView
-                android:id="@+id/register_act_calendarview"
+                android:id="@+id/registerActCalendarview"
                 android:layout_width="wrap_content"
                 android:layout_height="10dp"
-                android:layout_below="@+id/register_act_checkbox"
-                android:layout_above="@+id/register_act_button_register"></CalendarView>
+                android:layout_below="@+id/registerActCheckbox"
+                android:layout_above="@+id/registerActButtonRegister"></CalendarView>
         </RelativeLayout>
 
     </RelativeLayout>

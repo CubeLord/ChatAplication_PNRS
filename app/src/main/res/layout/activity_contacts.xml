@@ -14,11 +14,11 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:text="Log Out"
-            android:id="@+id/contacts_act_button_logout"/>
+            android:id="@+id/contactsActButtonLogout"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/contacts_act_button_logout"
+            android:layout_below="@+id/contactsActButtonLogout"
             android:orientation="vertical">
 
             <LinearLayout
@@ -38,7 +38,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/contacts_act_textview_contact1"
+                    android:id="@+id/contactsActTextviewContact1"
                     android:maxLines="1"
                     android:text="my friend"
                     android:clickable="true"

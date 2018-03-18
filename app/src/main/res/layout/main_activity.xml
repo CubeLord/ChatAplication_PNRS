@@ -33,7 +33,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:selectAllOnFocus="true"
-                    android:id="@+id/main_act_edit_username"/>
+                    android:id="@+id/mainActEditUsername"/>
 
                 <EditText
                     android:layout_width="match_parent"
@@ -41,7 +41,7 @@
                     android:layout_weight="1"
                     android:selectAllOnFocus="true"
                     android:inputType="textPassword"
-                    android:id="@+id/main_act_edit_password"/>
+                    android:id="@+id/mainActEditPassword"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -63,7 +63,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/main_act_button_login"
+                    android:id="@+id/mainActButtonLogin"
                     android:text="LOGIN"
                     android:enabled="false"
                     />
@@ -78,7 +78,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/main_act_button_register"
+                    android:id="@+id/mainActButtonRegister"
                     android:text="REGISTER"
                     />
             </LinearLayout>

@@ -18,10 +18,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        final Button login = findViewById(R.id.main_act_button_login);
-        Button register = findViewById(R.id.main_act_button_register);
-        final EditText username = (EditText)findViewById(R.id.main_act_edit_username);
-        final EditText password = (EditText)findViewById(R.id.main_act_edit_password);
+        final Button login = findViewById(R.id.mainActButtonLogin);
+        Button register = findViewById(R.id.mainActButtonRegister);
+        final EditText username = (EditText)findViewById(R.id.mainActEditUsername);
+        final EditText password = (EditText)findViewById(R.id.mainActEditPassword);
 
 
         login.setOnClickListener(this);
@@ -43,10 +43,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 if((username.getText().toString().trim().equals("")) || (password.getText().toString().length() < 6))
                 {
-                    ((Button)findViewById(R.id.main_act_button_login)).setEnabled(false);
+                    ((Button)findViewById(R.id.mainActButtonLogin)).setEnabled(false);
                 }else
                 {
-                    ((Button)findViewById(R.id.main_act_button_login)).setEnabled(true);
+                    ((Button)findViewById(R.id.mainActButtonLogin)).setEnabled(true);
                 }
             }
         });
@@ -67,10 +67,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d("EditText", "Password =" + password.getText().toString());
                 if((password.getText().toString().length() < 6) || (username.getText().toString().trim().equals("")))
                 {
-                    ((Button)findViewById(R.id.main_act_button_login)).setEnabled(false);
+                    ((Button)findViewById(R.id.mainActButtonLogin)).setEnabled(false);
                 }else
                 {
-                    ((Button)findViewById(R.id.main_act_button_login)).setEnabled(true);
+                    ((Button)findViewById(R.id.mainActButtonLogin)).setEnabled(true);
                 }
             }
         });
@@ -80,14 +80,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId())
         {
-            case R.id.main_act_button_register:
+            case R.id.mainActButtonRegister:
                 Log.d("Button", "Register Button Pressed!");
 
                 Intent registerActivity = new Intent(this, RegisterActivity.class);
                 startActivity(registerActivity);
 
                 break;
-            case R.id.main_act_button_login:
+            case R.id.mainActButtonLogin:
                 Log.d("Button", "Login Button Pressed!");
 
                 Intent contacts = new Intent(this, ContactsActivity.class);
