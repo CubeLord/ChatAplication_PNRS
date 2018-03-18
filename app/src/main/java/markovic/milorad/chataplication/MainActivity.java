@@ -11,69 +11,28 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher{
+
+    Button login;
+    Button register;
+    EditText username;
+    EditText password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        final Button login = findViewById(R.id.mainActButtonLogin);
-        Button register = findViewById(R.id.mainActButtonRegister);
-        final EditText username = (EditText)findViewById(R.id.mainActEditUsername);
-        final EditText password = (EditText)findViewById(R.id.mainActEditPassword);
-
+        login = findViewById(R.id.mainActButtonLogin);
+        register = findViewById(R.id.mainActButtonRegister);
+        username = (EditText)findViewById(R.id.mainActEditUsername);
+        password = (EditText)findViewById(R.id.mainActEditPassword);
 
         login.setOnClickListener(this);
         register.setOnClickListener(this);
-        username.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        username.addTextChangedListener(this);
+        password.addTextChangedListener(this);
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                Log.d("EditText", "Username =" + username.getText().toString());
-
-                if((username.getText().toString().trim().equals("")) || (password.getText().toString().length() < 6))
-                {
-                    ((Button)findViewById(R.id.mainActButtonLogin)).setEnabled(false);
-                }else
-                {
-                    ((Button)findViewById(R.id.mainActButtonLogin)).setEnabled(true);
-                }
-            }
-        });
-
-        password.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                Log.d("EditText", "Password =" + password.getText().toString());
-                if((password.getText().toString().length() < 6) || (username.getText().toString().trim().equals("")))
-                {
-                    ((Button)findViewById(R.id.mainActButtonLogin)).setEnabled(false);
-                }else
-                {
-                    ((Button)findViewById(R.id.mainActButtonLogin)).setEnabled(true);
-                }
-            }
-        });
     }
 
     @Override
@@ -95,5 +54,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
         }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+        if (editable.hashCode() == username.getText().hashCode()) {
+            Log.d("EditText", "Username =" + username.getText().toString());
+
+            if((username.getText().toString().trim().equals("")) || (password.getText().toString().length() < 6))
+            {
+                ((Button)findViewById(R.id.mainActButtonLogin)).setEnabled(false);
+            }else
+            {
+                ((Button)findViewById(R.id.mainActButtonLogin)).setEnabled(true);
+            }
+        }
+
+        if(editable.hashCode() == password.getText().hashCode()) {
+            Log.d("EditText", "Password =" + password.getText().toString());
+            if((password.getText().toString().length() < 6) || (username.getText().toString().trim().equals("")))
+            {
+                ((Button)findViewById(R.id.mainActButtonLogin)).setEnabled(false);
+            }else
+            {
+                ((Button)findViewById(R.id.mainActButtonLogin)).setEnabled(true);
+            }
+        }
+
     }
 }
