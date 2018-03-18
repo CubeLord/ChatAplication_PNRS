@@ -24,6 +24,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     Button registerButton;
     Spinner spinner;
     CalendarView calendarView;
+    private static final String BUTTON_LOG_TAG = "Button";
+    private static final String BUTTON_LOG_MESSAGE = "Register button pressed";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-                Log.d("Button", "Register button pressed");
+                Log.d(BUTTON_LOG_TAG, BUTTON_LOG_MESSAGE);
                 Intent contactsActivity = new Intent(this, ContactsActivity.class);
                 startActivity(contactsActivity);
     }

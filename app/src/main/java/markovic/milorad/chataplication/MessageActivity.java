@@ -11,6 +11,8 @@ import static android.widget.Toast.*;
 
 public class MessageActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final String SENT_LOG_MESSAGE = "Message is sent!";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,12 +30,11 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         switch (view.getId())
         {
             case R.id.messageActButtonLogout:
-                //Go to mainActivity
                 Intent main = new Intent(this, MainActivity.class);
                 startActivity(main);
                 break;
             case R.id.messageActButtonSend:
-                Toast.makeText(this,"Message is sent!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this,SENT_LOG_MESSAGE, Toast.LENGTH_LONG).show();
 
                 break;
         }
