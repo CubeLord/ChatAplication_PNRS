@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Chat Aplication</string>
+    <string-array name="genders">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+</resources>
