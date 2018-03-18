@@ -12,6 +12,7 @@ import static android.widget.Toast.*;
 public class MessageActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String SENT_LOG_MESSAGE = "Message is sent!";
+    Toast toast = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +35,9 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
                 startActivity(main);
                 break;
             case R.id.messageActButtonSend:
-                Toast.makeText(this,SENT_LOG_MESSAGE, Toast.LENGTH_LONG).show();
-
+                if(toast != null) toast.cancel();
+                toast = Toast.makeText(this,SENT_LOG_MESSAGE, Toast.LENGTH_LONG);
+                toast.show();
                 break;
         }
     }

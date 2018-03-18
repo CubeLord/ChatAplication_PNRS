@@ -13,14 +13,14 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:weightSum="2"
+            android:weightSum="2.5"
             android:orientation="vertical"
             android:gravity="center">
 
             <LinearLayout
                 android:layout_width="200dp"
                 android:layout_height="0dp"
-                android:gravity="center_horizontal"
+                android:gravity="center"
                 android:orientation="vertical"
                 android:layout_weight="1"
                 android:weightSum="2">
@@ -28,15 +28,17 @@
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:hint="Username"
                     android:selectAllOnFocus="true"
                     android:id="@+id/mainActEditUsername"/>
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:hint="Password"
                     android:selectAllOnFocus="true"
                     android:inputType="textPassword"
                     android:id="@+id/mainActEditPassword"/>
