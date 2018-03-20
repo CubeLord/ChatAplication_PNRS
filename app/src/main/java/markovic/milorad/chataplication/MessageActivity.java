@@ -5,16 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import static android.widget.Toast.*;
-
 public class MessageActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
 
-    private static final String SENT_LOG_MESSAGE = "Message is sent!";
     Toast toast = null;
 
     @Override
@@ -36,12 +34,14 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         switch (view.getId())
         {
             case R.id.messageActButtonLogout:
+                Log.d(getResources().getString(R.string.BUTTON_LOG_TAG), getResources().getString(R.string.LOGOUT_BUTTON_LOG_MESSAGE));
                 Intent main = new Intent(this, MainActivity.class);
                 startActivity(main);
                 break;
             case R.id.messageActButtonSend:
+                ((EditText)findViewById(R.id.messageActEditMessageText)).setText("");
                 if(toast != null) toast.cancel();
-                toast = Toast.makeText(this,SENT_LOG_MESSAGE, Toast.LENGTH_LONG);
+                toast = Toast.makeText(this,getResources().getString(R.string.SENT_LOG_MESSAGE), Toast.LENGTH_LONG);
                 toast.show();
                 break;
         }

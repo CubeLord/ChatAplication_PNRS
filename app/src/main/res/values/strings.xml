@@ -5,4 +5,15 @@
         <item>Female</item>
     </string-array>
 
+    <string name="BUTTON_LOG_TAG">Button</string>
+    <string name="EDITTEXT_LOG_TAG">EditText</string>
+    <string name="CONTACT_LOG_TAG">Contact</string>
+    <string name="SENT_LOG_MESSAGE">Message is Sent!</string>
+    <string name="CONTACT_LOG_MESSAGE">Contact was pressed!</string>
+    <string name="LOGOUT_BUTTON_LOG_MESSAGE">Logout button pressed!</string>
+    <string name="LOGIN_BUTTON_LOG_MESSAGE">Login button pressed!</string>
+    <string name="BUTTON_LOG_MESSAGE">Register button pressed!</string>
+    <string name="EDITTEXT_LOG_USERNAME_MESSAGE">Username = </string>
+    <string name="EDITTEXT_LOG_PASSWORD_MESSAGE">Password = </string>
+
 </resources>
