@@ -77,5 +77,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 }
-
 //TODO Ubaciti Razlicite boje, potencijalno za razlicite teme

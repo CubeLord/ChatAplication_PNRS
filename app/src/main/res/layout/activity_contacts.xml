@@ -9,7 +9,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:text="Log Out"
+            android:text="@string/BUTTON_TEXT_LOGOUT"
             android:id="@+id/contactsActButtonLogout"/>
         <LinearLayout
             android:layout_width="match_parent"

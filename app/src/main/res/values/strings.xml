@@ -5,6 +5,20 @@
         <item>Female</item>
     </string-array>
 
+    <string name="BUTTON_TEXT_LOGOUT">Log Out</string>
+    <string name="EDITTEXT_HINT_USERNAME">Username</string>
+    <string name="EDITTEXT_HINT_PASSWORD">Password</string>
+    <string name="EDITTEXT_HINT_FIRST_NAME">First name</string>
+    <string name="EDITTEXT_HINT_LAST_NAME">Last name</string>
+    <string name="EDITTEXT_HINT_EMAIL">example@gmail.com</string>
+    <string name="TEXTVIEW_TEXT_GENDER">gender</string>
+    <string name="CHECKBOX_TEXT_NOTIFICATIONS">Accept Notifications</string>
+    <string name="BUTTON_TEXT_REGISTER">Register</string>
+    <string name="TEXTVIEW_TEXT_BIRTHDATE">Birth Date</string>
+    <string name="EDITTEXT_TEXT_MESSAGE">Message text</string>
+    <string name="BUTTON_TEXT_SEND">Send</string>
+    <string name="BUTTON_TEXT_LOGIN">Login</string>
+
     <string name="BUTTON_LOG_TAG">Button</string>
     <string name="EDITTEXT_LOG_TAG">EditText</string>
     <string name="CONTACT_LOG_TAG">Contact</string>

@@ -21,7 +21,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/contactsActTextviewContact"
         android:maxLines="1"
-        android:text="my friend"
         android:clickable="true"
         android:textStyle="bold"
         android:textSize="25dp"
