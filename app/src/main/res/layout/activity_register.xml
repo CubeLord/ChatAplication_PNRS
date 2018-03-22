@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        tools:context="markovic.milorad.chataplication.RegisterActivity"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="markovic.milorad.chataplication.RegisterActivity"
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingRight="16dp"
-        android:paddingLeft="16dp"
-        android:paddingTop="5dp"
-        android:gravity="center">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingRight="16dp"
+    android:paddingLeft="16dp"
+    android:paddingTop="5dp"
+    android:gravity="center">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -92,9 +90,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
-                    android:hint="Email"
+                    android:hint="example@gmail.com"
                     android:selectAllOnFocus="true"
-                    android:layout_weight="2"/>
+                    android:layout_weight="2"
+                    android:inputType="textEmailAddress"/>
 
                 <TextView
                     android:layout_width="0dp"
@@ -132,7 +131,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Birth date"
-                android:layout_below="@+id/registerActCheckbox"/>
+                android:layout_below="@+id/registerActCheckbox"
+                android:id="@+id/textView" />
 
             <CalendarView
                 android:id="@+id/registerActCalendarview"

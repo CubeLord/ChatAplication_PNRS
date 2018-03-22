@@ -1,8 +1,7 @@
 package markovic.milorad.chataplication;
 
-import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -25,8 +24,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         login = findViewById(R.id.mainActButtonLogin);
         register = findViewById(R.id.mainActButtonRegister);
-        username = (EditText) findViewById(R.id.mainActEditUsername);
-        password = (EditText) findViewById(R.id.mainActEditPassword);
+        username = findViewById(R.id.mainActEditUsername);
+        password = findViewById(R.id.mainActEditPassword);
 
         login.setOnClickListener(this);
         register.setOnClickListener(this);
@@ -71,10 +70,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if((username.getText().toString().trim().equals("")) || (password.getText().toString().length() < 6))
         {
-            ((Button)findViewById(R.id.mainActButtonLogin)).setEnabled(false);
+            findViewById(R.id.mainActButtonLogin).setEnabled(false);
         }else
         {
-            ((Button)findViewById(R.id.mainActButtonLogin)).setEnabled(true);
+            findViewById(R.id.mainActButtonLogin).setEnabled(true);
         }
     }
 }
+
+//TODO Ubaciti Razlicite boje, potencijalno za razlicite teme

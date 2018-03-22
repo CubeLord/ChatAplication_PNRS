@@ -16,4 +16,12 @@
     <string name="EDITTEXT_LOG_USERNAME_MESSAGE">Username = </string>
     <string name="EDITTEXT_LOG_PASSWORD_MESSAGE">Password = </string>
 
+    <string-array name="contacts">
+        <item>friend 1</item>
+        <item>friend 2</item>
+        <item>friend 3</item>
+        <item>friend 4</item>
+        <item>friend 5</item>
+
+    </string-array>
 </resources>

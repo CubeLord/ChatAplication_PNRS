@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/contactsActListItem"
+    android:paddingLeft="25dp"
+    android:paddingRight="25dp">
+
+
+    <QuickContactBadge
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/colorLightGrey"
+        android:clickable="false"
+        android:foreground="@mipmap/ic_launcher_round"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/contactsActTextviewContact"
+        android:maxLines="1"
+        android:text="my friend"
+        android:clickable="true"
+        android:textStyle="bold"
+        android:textSize="25dp"
+        android:paddingLeft="20dp"/>
+
+</LinearLayout>

@@ -1,8 +1,8 @@
 package markovic.milorad.chataplication;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher{
 
@@ -29,19 +31,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        spinner = (Spinner)findViewById(R.id.registerActSpinner);
+        spinner = findViewById(R.id.registerActSpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.genders, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        calendarView = (CalendarView)findViewById(R.id.registerActCalendarview);
+        calendarView = findViewById(R.id.registerActCalendarview);
         calendarView.setDate(1514761200000L); //postavljanje datuma na 01.01.1996 - 820450800000L, a na 01.01.2018 - 1514761200000L
         calendarView.setMaxDate(Calendar.getInstance().getTimeInMillis());
 
-        username = (EditText)findViewById(R.id.registerActEditUsername);
-        password = (EditText)findViewById(R.id.registerActEditPassword);
-        email= (EditText)findViewById(R.id.registerActEditEmail);
-        registerButton = (Button)findViewById(R.id.registerActButtonRegister);
+        username = findViewById(R.id.registerActEditUsername);
+        password = findViewById(R.id.registerActEditPassword);
+        email= findViewById(R.id.registerActEditEmail);
+        registerButton = findViewById(R.id.registerActButtonRegister);
 
         registerButton.setOnClickListener(this);
         username.addTextChangedListener(this);
@@ -70,7 +72,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public void afterTextChanged(Editable editable) {
         if( !(username.getText().toString().equals("")) &
                 !(password.getText().toString().equals("")) &
-                !(email.getText().toString().equals("")) &
+                (isEmailValid(email.getText().toString())) &
                 (password.getText().toString().length() >= 6))
         {
             registerButton.setEnabled(true);
@@ -78,5 +80,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         {
             registerButton.setEnabled(false);
         }
+    }
+
+    public static boolean isEmailValid(String email) {
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 }
