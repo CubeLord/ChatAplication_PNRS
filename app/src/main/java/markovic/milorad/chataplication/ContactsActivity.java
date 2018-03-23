@@ -48,6 +48,8 @@ public class ContactsActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
+
     }
 }
 

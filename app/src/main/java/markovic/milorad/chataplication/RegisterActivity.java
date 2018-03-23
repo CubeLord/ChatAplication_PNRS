@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -24,7 +24,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     EditText email;
     Button registerButton;
     Spinner spinner;
-    CalendarView calendarView;
+    DatePicker datePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +36,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        calendarView = findViewById(R.id.registerActCalendarview);
-        calendarView.setDate(1514761200000L); //postavljanje datuma na 01.01.1996 - 820450800000L, a na 01.01.2018 - 1514761200000L
-        calendarView.setMaxDate(Calendar.getInstance().getTimeInMillis());
+        datePicker = findViewById(R.id.registerActDatePicker);
+        datePicker.setMaxDate(Calendar.getInstance().getTimeInMillis());
 
         username = findViewById(R.id.registerActEditUsername);
         password = findViewById(R.id.registerActEditPassword);
@@ -56,6 +55,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         Log.d(getResources().getString(R.string.BUTTON_LOG_TAG), getResources().getString(R.string.BUTTON_LOG_MESSAGE).toString());
         Intent contactsActivity = new Intent(this, ContactsActivity.class);
         startActivity(contactsActivity);
+        finish();
     }
 
     @Override

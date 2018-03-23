@@ -5,9 +5,9 @@
 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingRight="16dp"
-    android:paddingLeft="16dp"
-    android:paddingTop="5dp"
+    android:paddingRight="@dimen/registerActBorder"
+    android:paddingLeft="@dimen/registerActBorder"
+    android:paddingTop="@dimen/registerActBorder"
     android:gravity="center">
 
         <RelativeLayout
@@ -18,7 +18,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/registerActLayout1"
-                android:paddingBottom="16dp"
+                android:paddingBottom="@dimen/registerActBorder"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
@@ -29,7 +29,7 @@
                     android:maxLines="1"
                     android:layout_weight="1"
                     android:selectAllOnFocus="true"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginRight="@dimen/registerActEditTextPadding"
                     android:id="@+id/registerActEditUsername"/>
 
 
@@ -39,7 +39,7 @@
                     android:layout_weight="1"
                     android:maxLines="1"
                     android:selectAllOnFocus="true"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginLeft="@dimen/registerActEditTextPadding"
                     android:id="@+id/registerActEditFirstName"
                     android:hint="@string/EDITTEXT_HINT_FIRST_NAME"/>
 
@@ -60,7 +60,7 @@
                     android:layout_weight="1"
                     android:maxLines="1"
                     android:selectAllOnFocus="true"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginRight="@dimen/registerActEditTextPadding"
                     android:inputType="textPassword"
                     android:id="@+id/registerActEditPassword"/>
 
@@ -70,7 +70,7 @@
                     android:layout_weight="1"
                     android:maxLines="1"
                     android:selectAllOnFocus="true"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginLeft="@dimen/registerActEditTextPadding"
                     android:id="@+id/registerActEditLastName"
                     android:hint="@string/EDITTEXT_HINT_LAST_NAME"/>
 
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/registerActLayout2"
                 android:id="@+id/registerActLayout3"
-                android:paddingBottom="16dp"
+                android:paddingBottom="@dimen/registerActEditTextPadding"
                 android:weightSum="4">
 
                 <EditText
@@ -131,17 +131,25 @@
                 android:layout_height="wrap_content"
                 android:text="@string/TEXTVIEW_TEXT_BIRTHDATE"
                 android:layout_below="@+id/registerActCheckbox"
-                android:id="@+id/textView" />
+                android:id="@+id/registerActTextView" />
 
-            <CalendarView
-                android:id="@+id/registerActCalendarview"
+            <ScrollView
                 android:layout_width="wrap_content"
-                android:layout_height="10dp"
+                android:layout_height="wrap_content"
                 android:layout_above="@+id/registerActButtonRegister"
+                android:layout_below="@+id/registerActTextView"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/registerActCheckbox"
-                android:foregroundGravity="center"></CalendarView>
+                android:layout_marginLeft="@dimen/registerActDatePickermargin"
+                >
+
+
+                <DatePicker
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/registerActDatePicker"
+                    android:foregroundGravity="center"></DatePicker>
+            </ScrollView>
         </RelativeLayout>
 
     </RelativeLayout>

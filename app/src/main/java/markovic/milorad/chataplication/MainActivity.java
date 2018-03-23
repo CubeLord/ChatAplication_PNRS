@@ -43,11 +43,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 Intent registerActivity = new Intent(this, RegisterActivity.class);
                 startActivity(registerActivity);
+                finish();
 
                 break;
             case R.id.mainActButtonLogin:
                 Intent contacts = new Intent(this, ContactsActivity.class);
                 startActivity(contacts);
+                finish();
 
                 break;
         }

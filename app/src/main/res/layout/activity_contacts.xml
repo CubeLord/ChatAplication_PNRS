@@ -21,7 +21,7 @@
                 android:id="@+id/contactsActListView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:dividerHeight="20dp"
+                android:dividerHeight="@dimen/contactsActDeviderHeight"
                 android:divider="@color/colorDefault">   </ListView>
 
         </LinearLayout>

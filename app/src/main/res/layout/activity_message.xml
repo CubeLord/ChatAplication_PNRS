@@ -15,16 +15,16 @@
         android:layout_alignParentTop="true"/>
 
         <EditText
-            android:layout_width="200dp"
+            android:layout_width="0dp"
             android:id="@+id/messageActEditMessageText"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="@dimen/messageActBorder"
+            android:layout_marginBottom="@dimen/messageActBorder"
             android:focusedByDefault="false"
             android:layout_toLeftOf="@+id/messageActButtonSend"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="@dimen/messageActBorder"
             android:hint="@string/EDITTEXT_TEXT_MESSAGE"
             android:selectAllOnFocus="true"/>
 
@@ -37,6 +37,6 @@
             android:selectAllOnFocus="true"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginBottom="@dimen/messageActBorder"
+            android:layout_marginRight="@dimen/messageActBorder"/>
 </RelativeLayout>

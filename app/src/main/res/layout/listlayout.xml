@@ -6,13 +6,13 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:id="@+id/contactsActListItem"
-    android:paddingLeft="25dp"
-    android:paddingRight="25dp">
+    android:paddingLeft="@dimen/contactsActListBorder"
+    android:paddingRight="@dimen/contactsActListBorder">
 
 
     <QuickContactBadge
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/contactsActBadgeSize"
+        android:layout_height="@dimen/contactsActBadgeSize"
         android:background="@color/colorLightGrey"
         android:clickable="false"
         android:foreground="@mipmap/ic_launcher_round"/>
@@ -23,7 +23,7 @@
         android:maxLines="1"
         android:clickable="true"
         android:textStyle="bold"
-        android:textSize="25dp"
-        android:paddingLeft="20dp"/>
+        android:textSize="@dimen/listTextViewTextSize"
+        android:paddingLeft="@dimen/contactsActListBorder"/>
 
 </LinearLayout>

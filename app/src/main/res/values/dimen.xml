@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="mainActEditTextLength">200dp</dimen>
+    <dimen name="registerActBorder">15dp</dimen>
+    <dimen name="registerActEditTextPadding">8dp</dimen>
+    <dimen name="contactsActDeviderHeight">20dp</dimen>
+    <dimen name="messageActBorder">20dp</dimen>
+    <dimen name="contactsActListBorder">25dp</dimen>
+    <dimen name="contactsActBadgeSize">50dp</dimen>
+    <dimen name="listTextViewTextSize">25dp</dimen>
+    <dimen name="registerActDatePickermargin">15dp</dimen>
+</resources>
