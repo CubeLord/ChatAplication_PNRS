@@ -11,18 +11,30 @@
             android:layout_alignParentTop="true"
             android:text="@string/BUTTON_TEXT_LOGOUT"
             android:id="@+id/contactsActButtonLogout"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Chat List"
+            android:layout_alignParentTop="true"
+            android:layout_alignBottom="@+id/contactsActButtonLogout"
+            android:layout_toLeftOf="@id/contactsActButtonLogout"
+            android:layout_alignParentLeft="true"
+            android:textSize="@dimen/listTextViewTextSize"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/registerActBorder"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/contactsActButtonLogout"
             android:orientation="vertical">
 
-            <ListView
-                android:id="@+id/contactsActListView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:dividerHeight="@dimen/contactsActDeviderHeight"
-                android:divider="@color/colorDefault">   </ListView>
+        <ListView
+            android:id="@+id/contactsActListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:dividerHeight="@dimen/contactsActDeviderHeight"
+            android:divider="@color/colorDefault">   </ListView>
 
         </LinearLayout>
     </RelativeLayout>

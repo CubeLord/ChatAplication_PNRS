@@ -3,6 +3,7 @@ package markovic.milorad.chataplication;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,10 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class ContactsActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -101,20 +104,36 @@ class ContactsAdapter extends BaseAdapter {
         View row = inflater.inflate(R.layout.listlayout, viewGroup, false);
 
         TextView name = row.findViewById(R.id.contactsActTextviewContact);
-        name.setTypeface(null, Typeface.BOLD_ITALIC);
+        ImageView send = row.findViewById(R.id.contactsActListItemImage);
+        TextView icon = row.findViewById(R.id.contactsActListItemIcon);
+        //TODO figure out what to do with the ViewHolder
 
-        name.setOnClickListener(new View.OnClickListener() {
+        name.setTypeface(null, Typeface.BOLD_ITALIC);
+        final Contact contact = list.get(i);
+
+        send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d(context.getResources().getString(R.string.CONTACT_LOG_TAG), context.getResources().getString(R.string.CONTACT_LOG_MESSAGE));
 
                 Intent messageAct = new Intent(context, MessageActivity.class);
+                messageAct.putExtra("NAME", contact.name);
+
                 context.startActivity(messageAct);
             }
         });
 
-        Contact contact = list.get(i);
+
         name.setText(contact.name);
+        String s = contact.name.toString().toUpperCase();
+        String[] split = s.split("");
+        icon.setText((split[1]));
+
+        Random rnd = new Random();
+        icon.setBackgroundColor(Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)));
+
+        //icon.setText((contact.name.toString().toUpperCase()).charAt(1));
+        //This doesn't work?
         return row;
     }
 }

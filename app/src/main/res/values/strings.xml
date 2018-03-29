@@ -31,9 +31,9 @@
     <string name="EDITTEXT_LOG_PASSWORD_MESSAGE">Password = </string>
 
     <string-array name="contacts">
-        <item>friend 1</item>
-        <item>friend 2</item>
-        <item>friend 3</item>
+        <item>Milorad Markovic</item>
+        <item>Jelena Boroja</item>
+        <item>Vesna Isic</item>
         <item>friend 4</item>
         <item>friend 5</item>
 

@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:id="@+id/contactsActListItem"
     android:paddingLeft="@dimen/contactsActListBorder"
     android:paddingRight="@dimen/contactsActListBorder">
 
 
-    <QuickContactBadge
+    <!--<QuickContactBadge
         android:layout_width="@dimen/contactsActBadgeSize"
         android:layout_height="@dimen/contactsActBadgeSize"
         android:background="@color/colorLightGrey"
@@ -24,6 +23,34 @@
         android:clickable="true"
         android:textStyle="bold"
         android:textSize="@dimen/listTextViewTextSize"
-        android:paddingLeft="@dimen/contactsActListBorder"/>
+        android:paddingLeft="@dimen/contactsActListBorder"/>-->
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/contactsActListItemImage"
+        android:layout_width="@dimen/contactActListItemHeight"
+        android:layout_height="@dimen/contactActListItemHeight"
+        android:layout_alignParentRight="true"
+        android:clickable="true"
+        android:foreground="@mipmap/send_icon_foreground"/>
+    <TextView
+        android:id="@+id/contactsActListItemIcon"
+        android:layout_width="@dimen/contactActListItemHeight"
+        android:layout_height="@dimen/contactActListItemHeight"
+        android:text="L"
+        android:textSize="@dimen/listTextViewTextSize"
+        android:gravity="center"
+        android:layout_alignParentLeft="true"
+        android:background="@color/colorAccent"/>
+
+    <TextView
+        android:id="@+id/contactsActTextviewContact"
+        android:maxLines="1"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/contactActListItemHeight"
+        android:text="Name Username"
+        android:layout_toLeftOf="@+id/contactsActListItemImage"
+        android:layout_toRightOf="@+id/contactsActListItemIcon"
+        android:gravity="center"
+        android:textSize="@dimen/listTextViewTextSize"
+        />
+</RelativeLayout>
