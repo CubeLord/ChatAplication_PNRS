@@ -54,7 +54,7 @@
     <ListView
         android:layout_below="@id/messageActButtonLogout"
         android:layout_above="@id/messageActButtonSend"
-        android:id="@+id/contactsActListView"
+        android:id="@+id/messageActListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:dividerHeight="@dimen/contactsActDeviderHeight"

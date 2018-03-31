@@ -57,7 +57,6 @@ public class ContactsActivity extends AppCompatActivity implements View.OnClickL
 }
 
 class Contact {
-    //TODO add Contact images
     String name;
 
     Contact(String name){
@@ -75,7 +74,7 @@ class ContactsAdapter extends BaseAdapter {
         Resources res = context.getResources();
         String[] contacts = res.getStringArray(R.array.contacts);
 
-        for(int i = 0; i <(res.getStringArray(R.array.contacts)).length; i++)
+        for(int i = 0; i <contacts.length; i++)
         {
             list.add(new Contact(contacts[i]));
         }
@@ -93,47 +92,60 @@ class ContactsAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        return i; //Because we are not using a Database this should be the same as the ID
+        return i; //Because we are not using a Data base this should be the same as the ID
     }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        //LayoutInflater -> creates a new object with the same properties, which is not what findViewbyID would do
-        //FindViewById -> uses the same object each time
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View row = inflater.inflate(R.layout.listlayout, viewGroup, false);
+        View row = view;
+        if (row == null) {
+            //LayoutInflater -> creates a new object with the same properties, which is not what findViewbyID would do
+            //FindViewById -> uses the same object each time
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            row = inflater.inflate(R.layout.listlayout, viewGroup, false);
 
-        TextView name = row.findViewById(R.id.contactsActTextviewContact);
-        ImageView send = row.findViewById(R.id.contactsActListItemImage);
-        TextView icon = row.findViewById(R.id.contactsActListItemIcon);
-        //TODO figure out what to do with the ViewHolder
+            ViewHolder holder = new ViewHolder();
+            holder.name = row.findViewById(R.id.contactsActTextviewContact);
+            holder.send = row.findViewById(R.id.contactsActListItemImage);
+            holder.icon = row.findViewById(R.id.contactsActListItemIcon);
+            row.setTag(holder);
+        }
 
-        name.setTypeface(null, Typeface.BOLD_ITALIC);
+        ViewHolder holder = ((ViewHolder) row.getTag());
+        holder.name.setTypeface(null, Typeface.BOLD_ITALIC);
         final Contact contact = list.get(i);
 
-        send.setOnClickListener(new View.OnClickListener() {
+        holder.send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d(context.getResources().getString(R.string.CONTACT_LOG_TAG), context.getResources().getString(R.string.CONTACT_LOG_MESSAGE));
 
+                Bundle bundle = new Bundle();
+                bundle.putString("NAME",contact.name);
                 Intent messageAct = new Intent(context, MessageActivity.class);
-                messageAct.putExtra("NAME", contact.name);
+                messageAct.putExtras(bundle);
 
                 context.startActivity(messageAct);
             }
         });
 
 
-        name.setText(contact.name);
+        holder.name.setText(contact.name);
         String s = contact.name.toString().toUpperCase();
         String[] split = s.split("");
-        icon.setText((split[1]));
+        holder.icon.setText((split[1]));
 
         Random rnd = new Random();
-        icon.setBackgroundColor(Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)));
+        holder.icon.setBackgroundColor(Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)));
 
         //icon.setText((contact.name.toString().toUpperCase()).charAt(1));
         //This doesn't work?
         return row;
+    }
+
+    private class ViewHolder {
+        public ImageView send = null;
+        public TextView icon = null;
+        public TextView name = null;
     }
 }

@@ -4,7 +4,7 @@
     <dimen name="registerActBorder">15dp</dimen>
     <dimen name="registerActEditTextPadding">8dp</dimen>
     <dimen name="contactsActDeviderHeight">5dp</dimen>
-    <dimen name="messageActBorder">20dp</dimen>
+    <dimen name="messageActBorder">5dp</dimen>
     <dimen name="contactsActListBorder">0dp</dimen>
     <dimen name="contactsActBadgeSize">50dp</dimen>
     <dimen name="listTextViewTextSize">20dp</dimen>

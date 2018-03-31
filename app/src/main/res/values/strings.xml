@@ -38,4 +38,15 @@
         <item>friend 5</item>
 
     </string-array>
+
+    <string-array name="dummyMessages">
+        <item>Message 1</item>
+        <item>Message 2</item>
+        <item>Message 3</item>
+        <item>Message 4</item>
+        <item>Message 5</item>
+        <item>Message 6</item>
+        <item>Message 7</item>
+    </string-array>
+
 </resources>
