@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import markovic.milorad.chataplication.ContactsActivityPackage.ContactsActivity;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher{
 
     Button login;

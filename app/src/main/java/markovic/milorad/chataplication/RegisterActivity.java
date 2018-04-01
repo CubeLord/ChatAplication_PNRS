@@ -17,6 +17,8 @@ import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import markovic.milorad.chataplication.ContactsActivityPackage.ContactsActivity;
+
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher{
 
     EditText username;

@@ -1,9 +1,10 @@
-package markovic.milorad.chataplication;
+package markovic.milorad.chataplication.MessageActivityPackage;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,6 +23,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import markovic.milorad.chataplication.MainActivity;
+import markovic.milorad.chataplication.R;
 
 public class MessageActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
 
@@ -47,14 +51,13 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                list.removeViewInLayout(view);
                 adapter.remove(i);
                 adapter.notifyDataSetChanged();
                 return true;
             }
         });
 
-        contactName.setText(getIntent().getExtras().get("NAME").toString());
+        contactName.setText(getIntent().getExtras().get(this.getString(R.string.BUNDLE_CONTACT_NAME)).toString());
         messageText.addTextChangedListener(this);
         send.setOnClickListener(this);
         logout.setOnClickListener(this);
@@ -68,6 +71,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
                 Log.d(getResources().getString(R.string.BUTTON_LOG_TAG), getResources().getString(R.string.LOGOUT_BUTTON_LOG_MESSAGE));
                 Intent main = new Intent(this, MainActivity.class);
                 startActivity(main);
+                finish();
                 break;
             case R.id.messageActButtonSend:
                 EditText msg = findViewById(R.id.messageActEditMessageText);
@@ -129,9 +133,9 @@ class MessageAdapter extends BaseAdapter {
             col = rnd.nextInt(2) + 1;
             //TODO fix color representation
             if(col == 1) {
-                list.add(new Message(messages[i], 0xffffffff, 1));
+                list.add(new Message(messages[i], ContextCompat.getColor(context, R.color.colorWhite), 1));
             } else {
-                list.add(new Message(messages[i], 0x44444444, 0));
+                list.add(new Message(messages[i], ContextCompat.getColor(context, R.color.colorLightGrey), 0));
             }
         }
     }
@@ -157,18 +161,38 @@ class MessageAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        LayoutInflater inflater = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE));
-        View row = inflater.inflate(R.layout.message_list_layout, viewGroup, false);
+        View row = view;
 
-        TextView messageText = row.findViewById(R.id.messageActListItemText);
+        if (view == null) {
+            LayoutInflater inflater = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE));
+            row = inflater.inflate(R.layout.message_list_layout, viewGroup, false);
+
+            ViewHolderMessage holder = new ViewHolderMessage();
+            holder.setMessageText(((TextView) row.findViewById(R.id.messageActListItemText)));
+            row.setTag(holder);
+        }
+
+        ViewHolderMessage holder = ((ViewHolderMessage) row.getTag());
         final Message message = list.get(i);
-        messageText.setText(message.messageText);
-        messageText.setBackgroundColor(message.color);
+        holder.getMessageText().setText(message.messageText);
+        holder.getMessageText().setBackgroundColor(message.color);
         if (message.pos == 1) {
-            messageText.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+            holder.getMessageText().setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
         } else {
-            messageText.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
+            holder.getMessageText().setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
         }
         return row;
+    }
+}
+
+ class ViewHolderMessage {
+    private TextView messageText = null;
+
+    public TextView getMessageText() {
+        return messageText;
+    }
+
+    public void setMessageText(TextView messageText) {
+        this.messageText = messageText;
     }
 }

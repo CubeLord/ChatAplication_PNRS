@@ -1,4 +1,4 @@
-package markovic.milorad.chataplication;
+package markovic.milorad.chataplication.ContactsActivityPackage;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,17 +20,21 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Random;
 
+import markovic.milorad.chataplication.MainActivity;
+import markovic.milorad.chataplication.MessageActivityPackage.MessageActivity;
+import markovic.milorad.chataplication.R;
+
 public class ContactsActivity extends AppCompatActivity implements View.OnClickListener {
 
     ListView list;
-
+    public static ContactsActivity contactsActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
 
         Button logout = findViewById(R.id.contactsActButtonLogout);
-
+        contactsActivity = this;
         list = findViewById(R.id.contactsActListView);
         list.setAdapter(new ContactsAdapter(this));
 
@@ -45,6 +49,7 @@ public class ContactsActivity extends AppCompatActivity implements View.OnClickL
                 Log.d(getResources().getString(R.string.BUTTON_LOG_TAG), getResources().getString(R.string.LOGOUT_BUTTON_LOG_MESSAGE));
                 Intent mainActivity = new Intent(this, MainActivity.class);
                 startActivity(mainActivity);
+                finish();
                 break;
         }
     }
@@ -104,48 +109,71 @@ class ContactsAdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = inflater.inflate(R.layout.listlayout, viewGroup, false);
 
-            ViewHolder holder = new ViewHolder();
-            holder.name = row.findViewById(R.id.contactsActTextviewContact);
-            holder.send = row.findViewById(R.id.contactsActListItemImage);
-            holder.icon = row.findViewById(R.id.contactsActListItemIcon);
+            ViewHolderContact holder = new ViewHolderContact();
+            holder.setName(((TextView) row.findViewById(R.id.contactsActTextviewContact)));
+            holder.setSend(((ImageView) row.findViewById(R.id.contactsActListItemImage)));
+            holder.setIcon(((TextView) row.findViewById(R.id.contactsActListItemIcon)));
             row.setTag(holder);
         }
 
-        ViewHolder holder = ((ViewHolder) row.getTag());
-        holder.name.setTypeface(null, Typeface.BOLD_ITALIC);
+        ViewHolderContact holder = ((ViewHolderContact) row.getTag());
+        holder.getName().setTypeface(null, Typeface.BOLD_ITALIC);
         final Contact contact = list.get(i);
 
-        holder.send.setOnClickListener(new View.OnClickListener() {
+        holder.getSend().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d(context.getResources().getString(R.string.CONTACT_LOG_TAG), context.getResources().getString(R.string.CONTACT_LOG_MESSAGE));
 
                 Bundle bundle = new Bundle();
-                bundle.putString("NAME",contact.name);
+                bundle.putString(context.getString(R.string.BUNDLE_CONTACT_NAME), contact.name);
                 Intent messageAct = new Intent(context, MessageActivity.class);
                 messageAct.putExtras(bundle);
 
                 context.startActivity(messageAct);
+                ContactsActivity.contactsActivity.finish();
+
             }
         });
 
 
-        holder.name.setText(contact.name);
+        holder.getName().setText(contact.name);
         String s = contact.name.toString().toUpperCase();
         String[] split = s.split("");
-        holder.icon.setText((split[1]));
+        holder.getIcon().setText((split[1]));
 
         Random rnd = new Random();
-        holder.icon.setBackgroundColor(Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)));
-
-        //icon.setText((contact.name.toString().toUpperCase()).charAt(1));
-        //This doesn't work?
+        holder.getIcon().setBackgroundColor(Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)));
         return row;
     }
+}
 
-    private class ViewHolder {
-        public ImageView send = null;
-        public TextView icon = null;
-        public TextView name = null;
+class ViewHolderContact {
+    private ImageView send = null;
+    private TextView icon = null;
+    private TextView name = null;
+
+    public ImageView getSend() {
+        return send;
+    }
+
+    public TextView getIcon() {
+        return icon;
+    }
+
+    public TextView getName() {
+        return name;
+    }
+
+    public void setSend(ImageView send) {
+        this.send = send;
+    }
+
+    public void setIcon(TextView icon) {
+        this.icon = icon;
+    }
+
+    public void setName(TextView name) {
+        this.name = name;
     }
 }
