@@ -1,28 +1,18 @@
 package markovic.milorad.chataplication.MessageActivityPackage;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.Random;
 
 import markovic.milorad.chataplication.MainActivity;
 import markovic.milorad.chataplication.R;
@@ -105,94 +95,3 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
     }
 }
 
-class Message {
-    String messageText;
-    int color;
-    int pos;
-
-    Message(String s, int c, int p) {
-        this.messageText = s;
-        this.color = c;
-        this.pos = p;
-    }
-}
-
-class MessageAdapter extends BaseAdapter {
-    ArrayList<Message> list;
-    Context context;
-
-    MessageAdapter(Context c) {
-        context = c;
-        list = new ArrayList<Message>();
-        Resources res = context.getResources();
-        String[] messages = res.getStringArray(R.array.dummyMessages);
-        int col;
-        Random rnd = new Random();
-
-        for (int  i = 0; i < messages.length; i++) {
-            col = rnd.nextInt(2) + 1;
-            //TODO fix color representation
-            if(col == 1) {
-                list.add(new Message(messages[i], ContextCompat.getColor(context, R.color.colorWhite), 1));
-            } else {
-                list.add(new Message(messages[i], ContextCompat.getColor(context, R.color.colorLightGrey), 0));
-            }
-        }
-    }
-
-    @Override
-    public int getCount() {
-        return list.size();
-    }
-
-    @Override
-    public Object getItem(int i) {
-        return list.get(i);
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return i;
-    }
-
-    public void remove(int i) {
-        list.remove(i);
-    }
-
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        View row = view;
-
-        if (view == null) {
-            LayoutInflater inflater = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE));
-            row = inflater.inflate(R.layout.message_list_layout, viewGroup, false);
-
-            ViewHolderMessage holder = new ViewHolderMessage();
-            holder.setMessageText(((TextView) row.findViewById(R.id.messageActListItemText)));
-            row.setTag(holder);
-        }
-
-        ViewHolderMessage holder = ((ViewHolderMessage) row.getTag());
-        final Message message = list.get(i);
-        holder.getMessageText().setText(message.messageText);
-        holder.getMessageText().setBackgroundColor(message.color);
-        if (message.pos == 1) {
-            holder.getMessageText().setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
-        } else {
-            holder.getMessageText().setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
-        }
-        return row;
-    }
-}
-
- class ViewHolderMessage {
-    private TextView messageText = null;
-
-    public TextView getMessageText() {
-        return messageText;
-    }
-
-    public void setMessageText(TextView messageText) {
-        this.messageText = messageText;
-    }
-}
