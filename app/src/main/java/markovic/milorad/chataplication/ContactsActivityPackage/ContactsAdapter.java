@@ -82,8 +82,6 @@ public class ContactsAdapter extends BaseAdapter {
                 messageAct.putExtras(bundle);
 
                 context.startActivity(messageAct);
-                ContactsActivity.contactsActivity.finish();
-
             }
         });
 

@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import markovic.milorad.chataplication.ContactsActivityPackage.ContactsActivity;
 import markovic.milorad.chataplication.MainActivity;
 import markovic.milorad.chataplication.R;
 
@@ -60,6 +61,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.messageActButtonLogout:
                 Log.d(getResources().getString(R.string.BUTTON_LOG_TAG), getResources().getString(R.string.LOGOUT_BUTTON_LOG_MESSAGE));
                 Intent main = new Intent(this, MainActivity.class);
+                ContactsActivity.contactsActivity.finish();
                 startActivity(main);
                 finish();
                 break;
@@ -93,5 +95,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
             findViewById(R.id.messageActButtonSend).setEnabled(true);
         }
     }
+
+
 }
 

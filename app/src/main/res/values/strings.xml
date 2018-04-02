@@ -29,6 +29,7 @@
     <string name="BUTTON_LOG_MESSAGE">Register button pressed!</string>
     <string name="EDITTEXT_LOG_USERNAME_MESSAGE">Username = </string>
     <string name="EDITTEXT_LOG_PASSWORD_MESSAGE">Password = </string>
+    <string name="TEXTVIEW_CONTACTS_LIST_NAME">My Chat List</string>
     <string name="BUNDLE_CONTACT_NAME">NAME</string>
 
     <string-array name="contacts">
