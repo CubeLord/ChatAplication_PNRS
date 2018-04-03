@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 
 import markovic.milorad.chataplication.ContactsActivityPackage.ContactsActivity;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher{
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
 
     EditText username;
     EditText password;
@@ -43,7 +43,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         username = findViewById(R.id.registerActEditUsername);
         password = findViewById(R.id.registerActEditPassword);
-        email= findViewById(R.id.registerActEditEmail);
+        email = findViewById(R.id.registerActEditEmail);
         registerButton = findViewById(R.id.registerActButtonRegister);
 
         registerButton.setOnClickListener(this);
@@ -72,14 +72,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void afterTextChanged(Editable editable) {
-        if( !(username.getText().toString().equals("")) &
+        if (!(username.getText().toString().equals("")) &
                 !(password.getText().toString().equals("")) &
                 (isEmailValid(email.getText().toString())) &
-                (password.getText().toString().length() >= 6))
-        {
+                (password.getText().toString().length() >= 6)) {
             registerButton.setEnabled(true);
-        } else
-        {
+        } else {
             registerButton.setEnabled(false);
         }
     }

@@ -3,7 +3,7 @@ package markovic.milorad.chataplication.ContactsActivityPackage;
 public class Contact {
     String name;
 
-    Contact(String name){
+    Contact(String name) {
         this.name = name;
     }
 

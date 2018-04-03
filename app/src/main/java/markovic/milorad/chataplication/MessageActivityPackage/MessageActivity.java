@@ -56,8 +56,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-        switch (view.getId())
-        {
+        switch (view.getId()) {
             case R.id.messageActButtonLogout:
                 Log.d(getResources().getString(R.string.BUTTON_LOG_TAG), getResources().getString(R.string.LOGOUT_BUTTON_LOG_MESSAGE));
                 Intent main = new Intent(this, MainActivity.class);
@@ -68,10 +67,10 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.messageActButtonSend:
                 EditText msg = findViewById(R.id.messageActEditMessageText);
                 adapter.list.add(new Message(msg.getText().toString(), 0xffffffff, 1));
-                list.setSelection(adapter.getCount() -1);
+                list.setSelection(adapter.getCount() - 1);
                 msg.setText("");
-                if(toast != null) toast.cancel();
-                toast = Toast.makeText(this,getResources().getString(R.string.SENT_LOG_MESSAGE), Toast.LENGTH_LONG);
+                if (toast != null) toast.cancel();
+                toast = Toast.makeText(this, getResources().getString(R.string.SENT_LOG_MESSAGE), Toast.LENGTH_LONG);
                 toast.show();
                 break;
         }
@@ -89,7 +88,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void afterTextChanged(Editable editable) {
-        if(((EditText)findViewById(R.id.messageActEditMessageText)).getText().toString().equals("")){
+        if (((EditText) findViewById(R.id.messageActEditMessageText)).getText().toString().equals("")) {
             findViewById(R.id.messageActButtonSend).setEnabled(false);
         } else {
             findViewById(R.id.messageActButtonSend).setEnabled(true);

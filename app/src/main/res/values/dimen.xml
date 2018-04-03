@@ -8,6 +8,7 @@
     <dimen name="contactsActListBorder">0dp</dimen>
     <dimen name="contactsActBadgeSize">50dp</dimen>
     <dimen name="listTextViewTextSize">20dp</dimen>
+    <dimen name="MessagelistTextViewTextSize">15dp</dimen>
     <dimen name="registerActDatePickermargin">15dp</dimen>
     <dimen name="contactActListItemHeight">70dp</dimen>
 </resources>

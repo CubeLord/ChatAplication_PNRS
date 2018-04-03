@@ -87,8 +87,6 @@ public class MessageAdapter extends BaseAdapter {
         holder.getMessageText().setBackground(round);
 
 
-
-
         if (message.getPos() == 1) {
             holder.getMessageText().setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
         } else {

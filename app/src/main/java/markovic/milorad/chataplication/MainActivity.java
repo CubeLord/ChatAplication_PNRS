@@ -12,7 +12,7 @@ import android.widget.EditText;
 
 import markovic.milorad.chataplication.ContactsActivityPackage.ContactsActivity;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
 
     Button login;
     Button register;
@@ -38,8 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        switch (view.getId())
-        {
+        switch (view.getId()) {
             case R.id.mainActButtonRegister:
                 Log.d(getResources().getString(R.string.BUTTON_LOG_TAG), getResources().getString(R.string.BUTTON_LOG_MESSAGE));
 
@@ -72,11 +71,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.d(getResources().getString(R.string.EDITTEXT_LOG_TAG), getResources().getString(R.string.EDITTEXT_LOG_USERNAME_MESSAGE) + username.getText().toString());
         Log.d(getResources().getString(R.string.EDITTEXT_LOG_TAG), getResources().getString(R.string.EDITTEXT_LOG_PASSWORD_MESSAGE) + password.getText().toString());
 
-        if((username.getText().toString().trim().equals("")) || (password.getText().toString().length() < 6))
-        {
+        if ((username.getText().toString().trim().equals("")) || (password.getText().toString().length() < 6)) {
             findViewById(R.id.mainActButtonLogin).setEnabled(false);
-        }else
-        {
+        } else {
             findViewById(R.id.mainActButtonLogin).setEnabled(true);
         }
     }

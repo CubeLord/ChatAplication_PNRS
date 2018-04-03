@@ -24,14 +24,13 @@ public class ContactsAdapter extends BaseAdapter {
     ArrayList<Contact> list;
     Context context;
 
-    ContactsAdapter(Context c){
+    ContactsAdapter(Context c) {
         context = c;
         list = new ArrayList<Contact>();
         Resources res = context.getResources();
         String[] contacts = res.getStringArray(R.array.contacts);
 
-        for(int i = 0; i <contacts.length; i++)
-        {
+        for (int i = 0; i < contacts.length; i++) {
             list.add(new Contact(contacts[i]));
         }
     }
