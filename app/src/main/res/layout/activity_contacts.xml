@@ -1,40 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="markovic.milorad.chataplication.ContactsActivityPackage.ContactsActivity"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:text="@string/BUTTON_TEXT_LOGOUT"
-            android:id="@+id/contactsActButtonLogout"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text= "@string/TEXTVIEW_CONTACTS_LIST_NAME"
-            android:layout_alignParentTop="true"
-            android:layout_alignBottom="@+id/contactsActButtonLogout"
-            android:layout_toLeftOf="@id/contactsActButtonLogout"
-            android:layout_alignParentLeft="true"
-            android:textSize="@dimen/listTextViewTextSize"
-            android:gravity="center_vertical"
-            android:layout_marginLeft="@dimen/registerActBorder"/>
+    android:layout_height="match_parent"
+    tools:context="markovic.milorad.chataplication.ContactsActivityPackage.ContactsActivity">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/contactsActButtonLogout"
-            android:orientation="vertical">
+    <Button
+        android:id="@+id/contactsActButtonLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/BUTTON_TEXT_LOGOUT" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/contactsActButtonLogout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="@dimen/registerActBorder"
+        android:layout_toLeftOf="@id/contactsActButtonLogout"
+        android:gravity="center_vertical"
+        android:text="@string/TEXTVIEW_CONTACTS_LIST_NAME"
+        android:textSize="@dimen/listTextViewTextSize" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/contactsActButtonLogout"
+        android:orientation="vertical">
 
         <ListView
             android:id="@+id/contactsActListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:dividerHeight="@dimen/contactsActDeviderHeight"
-            android:divider="@color/colorDefault">   </ListView>
+            android:divider="@color/colorDefault"
+            android:dividerHeight="@dimen/contactsActDeviderHeight"></ListView>
 
-        </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

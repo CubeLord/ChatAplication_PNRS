@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/contactsActListItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/contactsActListItem"
     android:paddingLeft="@dimen/contactsActListBorder"
     android:paddingRight="@dimen/contactsActListBorder">
 
@@ -31,24 +30,24 @@
         android:layout_height="@dimen/contactActListItemHeight"
         android:layout_alignParentRight="true"
         android:clickable="true"
-        android:foreground="@mipmap/send_icon_foreground"/>
+        android:foreground="@mipmap/send_icon_foreground" />
+
     <TextView
         android:id="@+id/contactsActListItemIcon"
         android:layout_width="@dimen/contactActListItemHeight"
         android:layout_height="@dimen/contactActListItemHeight"
-        android:textSize="@dimen/listTextViewTextSize"
-        android:gravity="center"
         android:layout_alignParentLeft="true"
-        android:background="@color/colorAccent"/>
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:textSize="@dimen/listTextViewTextSize" />
 
     <TextView
         android:id="@+id/contactsActTextviewContact"
-        android:maxLines="1"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/contactActListItemHeight"
         android:layout_toLeftOf="@+id/contactsActListItemImage"
         android:layout_toRightOf="@+id/contactsActListItemIcon"
         android:gravity="center"
-        android:textSize="@dimen/listTextViewTextSize"
-        />
+        android:maxLines="1"
+        android:textSize="@dimen/listTextViewTextSize" />
 </RelativeLayout>

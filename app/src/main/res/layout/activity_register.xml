@@ -1,155 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="markovic.milorad.chataplication.RegisterActivity"
-
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingRight="@dimen/registerActBorder"
-    android:paddingLeft="@dimen/registerActBorder"
-    android:paddingTop="@dimen/registerActBorder"
-    android:gravity="center">
 
-        <RelativeLayout
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:paddingLeft="@dimen/registerActBorder"
+    android:paddingRight="@dimen/registerActBorder"
+    android:paddingTop="@dimen/registerActBorder"
+    tools:context="markovic.milorad.chataplication.RegisterActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <LinearLayout
+            android:id="@+id/registerActLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center">
-            <LinearLayout
-                android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/registerActBorder"
+            android:weightSum="2">
+
+            <EditText
+                android:id="@+id/registerActEditUsername"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/registerActLayout1"
-                android:paddingBottom="@dimen/registerActBorder"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/EDITTEXT_HINT_USERNAME"
-                    android:maxLines="1"
-                    android:layout_weight="1"
-                    android:selectAllOnFocus="true"
-                    android:layout_marginRight="@dimen/registerActEditTextPadding"
-                    android:id="@+id/registerActEditUsername"/>
+                android:layout_marginRight="@dimen/registerActEditTextPadding"
+                android:layout_weight="1"
+                android:hint="@string/EDITTEXT_HINT_USERNAME"
+                android:maxLines="1"
+                android:selectAllOnFocus="true" />
 
 
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:maxLines="1"
-                    android:selectAllOnFocus="true"
-                    android:layout_marginLeft="@dimen/registerActEditTextPadding"
-                    android:id="@+id/registerActEditFirstName"
-                    android:hint="@string/EDITTEXT_HINT_FIRST_NAME"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <EditText
+                android:id="@+id/registerActEditFirstName"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_below="@+id/registerActLayout1"
-                android:weightSum="2"
-                android:id="@+id/registerActLayout2">
+                android:layout_marginLeft="@dimen/registerActEditTextPadding"
+                android:layout_weight="1"
+                android:hint="@string/EDITTEXT_HINT_FIRST_NAME"
+                android:maxLines="1"
+                android:selectAllOnFocus="true" />
 
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/EDITTEXT_HINT_PASSWORD"
-                    android:layout_weight="1"
-                    android:maxLines="1"
-                    android:selectAllOnFocus="true"
-                    android:layout_marginRight="@dimen/registerActEditTextPadding"
-                    android:inputType="textPassword"
-                    android:id="@+id/registerActEditPassword"/>
+        </LinearLayout>
 
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:maxLines="1"
-                    android:selectAllOnFocus="true"
-                    android:layout_marginLeft="@dimen/registerActEditTextPadding"
-                    android:id="@+id/registerActEditLastName"
-                    android:hint="@string/EDITTEXT_HINT_LAST_NAME"/>
+        <LinearLayout
+            android:id="@+id/registerActLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/registerActLayout1"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <EditText
+                android:id="@+id/registerActEditPassword"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/registerActLayout2"
-                android:id="@+id/registerActLayout3"
-                android:paddingBottom="@dimen/registerActEditTextPadding"
-                android:weightSum="4">
+                android:layout_marginRight="@dimen/registerActEditTextPadding"
+                android:layout_weight="1"
+                android:hint="@string/EDITTEXT_HINT_PASSWORD"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:selectAllOnFocus="true" />
 
-                <EditText
-                    android:id="@+id/registerActEditEmail"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:hint="@string/EDITTEXT_HINT_EMAIL"
-                    android:selectAllOnFocus="true"
-                    android:layout_weight="2"
-                    android:inputType="textEmailAddress"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.7"
-                    android:text="@string/TEXTVIEW_TEXT_GENDER"
-                    android:gravity="center"/>
-
-                <Spinner
-                    android:id="@+id/registerActSpinner"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.3"
-                    android:gravity="center"
-                    android:textAlignment="textEnd"
-                    android:layout_gravity="center"></Spinner>
-            </LinearLayout>
-
-            <CheckBox
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/registerActEditLastName"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/registerActCheckbox"
-                android:layout_below="@+id/registerActLayout3"
-                android:text="@string/CHECKBOX_TEXT_NOTIFICATIONS"/>
+                android:layout_marginLeft="@dimen/registerActEditTextPadding"
+                android:layout_weight="1"
+                android:hint="@string/EDITTEXT_HINT_LAST_NAME"
+                android:maxLines="1"
+                android:selectAllOnFocus="true" />
 
-            <Button
-                android:layout_width="wrap_content"
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/registerActLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/registerActLayout2"
+            android:paddingBottom="@dimen/registerActEditTextPadding"
+            android:weightSum="4">
+
+            <EditText
+                android:id="@+id/registerActEditEmail"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true"
-                android:text="@string/BUTTON_TEXT_REGISTER"
-                android:enabled="false"
-                android:id="@+id/registerActButtonRegister"/>
+                android:layout_weight="2"
+                android:hint="@string/EDITTEXT_HINT_EMAIL"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:selectAllOnFocus="true" />
+
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/TEXTVIEW_TEXT_BIRTHDATE"
-                android:layout_below="@+id/registerActCheckbox"
-                android:id="@+id/registerActTextView" />
+                android:layout_weight="0.7"
+                android:gravity="center"
+                android:text="@string/TEXTVIEW_TEXT_GENDER" />
 
-            <ScrollView
-                android:layout_width="wrap_content"
+            <Spinner
+                android:id="@+id/registerActSpinner"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/registerActButtonRegister"
-                android:layout_below="@+id/registerActTextView"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="@dimen/registerActDatePickermargin"
-                >
+                android:layout_gravity="center"
+                android:layout_weight="1.3"
+                android:gravity="center"
+                android:textAlignment="textEnd"></Spinner>
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/registerActCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/registerActLayout3"
+            android:text="@string/CHECKBOX_TEXT_NOTIFICATIONS" />
+
+        <Button
+            android:id="@+id/registerActButtonRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:enabled="false"
+            android:text="@string/BUTTON_TEXT_REGISTER" />
+
+        <TextView
+            android:id="@+id/registerActTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/registerActCheckbox"
+            android:text="@string/TEXTVIEW_TEXT_BIRTHDATE" />
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/registerActButtonRegister"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/registerActTextView"
+            android:layout_marginLeft="@dimen/registerActDatePickermargin">
 
 
-                <DatePicker
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/registerActDatePicker"
-                    android:foregroundGravity="center"></DatePicker>
-            </ScrollView>
-        </RelativeLayout>
-
+            <DatePicker
+                android:id="@+id/registerActDatePicker"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:foregroundGravity="center"></DatePicker>
+        </ScrollView>
     </RelativeLayout>
+
+</RelativeLayout>

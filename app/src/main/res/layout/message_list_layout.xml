@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:longClickable="true"
-    android:descendantFocusability="blocksDescendants">
+    android:id="@+id/messageActLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    android:longClickable="true">
+
     <TextView
         android:id="@+id/messageActListItemText"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/contactActListItemHeight"
-        android:background="@color/colorAccent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentRight="false"
+        android:background="@drawable/rounded_shape"
         android:paddingLeft="@dimen/messageActBorder"
-        android:paddingRight="@dimen/messageActBorder"
-        />
+        android:paddingRight="@dimen/messageActBorder" />
 </RelativeLayout>

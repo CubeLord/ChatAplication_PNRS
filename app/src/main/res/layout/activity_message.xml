@@ -1,62 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="markovic.milorad.chataplication.MessageActivityPackage.MessageActivity"
-
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+
+    android:layout_height="match_parent"
+    tools:context="markovic.milorad.chataplication.MessageActivityPackage.MessageActivity">
 
     <Button
+        android:id="@+id/messageActButtonLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/messageActButtonLogout"
-        android:text="@string/BUTTON_TEXT_LOGOUT"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true"
+        android:text="@string/BUTTON_TEXT_LOGOUT" />
+
     <TextView
         android:id="@+id/messageActTextViewName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/messageActButtonLogout"
-        android:layout_alignParentLeft="true"
         android:layout_alignBottom="@id/messageActButtonLogout"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="@dimen/messageActBorder"
+        android:layout_toLeftOf="@id/messageActButtonLogout"
         android:gravity="center_vertical"
-        android:textSize="@dimen/listTextViewTextSize"/>
+        android:textSize="@dimen/listTextViewTextSize" />
 
     <EditText
-        android:layout_width="0dp"
         android:id="@+id/messageActEditMessageText"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="@dimen/messageActBorder"
+        android:layout_alignParentLeft="true"
         android:layout_marginBottom="@dimen/messageActBorder"
-        android:focusedByDefault="false"
-        android:layout_toLeftOf="@+id/messageActButtonSend"
+        android:layout_marginLeft="@dimen/messageActBorder"
         android:layout_marginRight="@dimen/messageActBorder"
+        android:layout_toLeftOf="@+id/messageActButtonSend"
+        android:focusedByDefault="false"
         android:hint="@string/EDITTEXT_TEXT_MESSAGE"
-        android:selectAllOnFocus="true"/>
+        android:maxLines="1"
+        android:selectAllOnFocus="true" />
 
     <Button
+        android:id="@+id/messageActButtonSend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/messageActButtonSend"
-        android:text="@string/BUTTON_TEXT_SEND"
-        android:enabled="false"
-        android:selectAllOnFocus="true"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="@dimen/messageActBorder"
-        android:layout_marginRight="@dimen/messageActBorder"/>
+        android:layout_marginRight="@dimen/messageActBorder"
+        android:enabled="false"
+        android:selectAllOnFocus="true"
+        android:text="@string/BUTTON_TEXT_SEND" />
 
     <ListView
-        android:layout_below="@id/messageActButtonLogout"
-        android:layout_above="@id/messageActButtonSend"
         android:id="@+id/messageActListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:dividerHeight="@dimen/contactsActDeviderHeight"
-        android:divider="@color/colorDefault">   </ListView>
+        android:layout_above="@id/messageActButtonSend"
+        android:layout_below="@id/messageActButtonLogout"
+        android:divider="@color/colorDefault"
+        android:dividerHeight="@dimen/contactsActDeviderHeight"></ListView>
 </RelativeLayout>
