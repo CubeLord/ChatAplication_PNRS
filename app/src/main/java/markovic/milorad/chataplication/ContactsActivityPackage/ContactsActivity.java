@@ -15,6 +15,7 @@ public class ContactsActivity extends AppCompatActivity implements View.OnClickL
 
     ListView list;
     public static ContactsActivity contactsActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,8 +31,7 @@ public class ContactsActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        switch (view.getId())
-        {
+        switch (view.getId()) {
             case R.id.contactsActButtonLogout:
                 Log.d(getResources().getString(R.string.BUTTON_LOG_TAG), getResources().getString(R.string.LOGOUT_BUTTON_LOG_MESSAGE));
                 Intent mainActivity = new Intent(this, MainActivity.class);

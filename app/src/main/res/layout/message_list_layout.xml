@@ -13,7 +13,7 @@
         android:layout_alignParentLeft="false"
         android:layout_alignParentRight="false"
         android:background="@drawable/rounded_shape"
-        android:textSize="@dimen/MessagelistTextViewTextSize"
         android:paddingLeft="@dimen/messageActBorder"
-        android:paddingRight="@dimen/messageActBorder" />
+        android:paddingRight="@dimen/messageActBorder"
+        android:textSize="@dimen/MessagelistTextViewTextSize" />
 </RelativeLayout>
