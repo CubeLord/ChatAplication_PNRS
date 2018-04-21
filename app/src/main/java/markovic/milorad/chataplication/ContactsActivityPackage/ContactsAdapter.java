@@ -2,7 +2,6 @@ package markovic.milorad.chataplication.ContactsActivityPackage;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -27,12 +26,16 @@ public class ContactsAdapter extends BaseAdapter {
     ContactsAdapter(Context c) {
         context = c;
         list = new ArrayList<Contact>();
+
+/*
         Resources res = context.getResources();
         String[] contacts = res.getStringArray(R.array.contacts);
 
         for (int i = 0; i < contacts.length; i++) {
             list.add(new Contact(contacts[i]));
         }
+*/
+
     }
 
     @Override
@@ -48,6 +51,15 @@ public class ContactsAdapter extends BaseAdapter {
     @Override
     public long getItemId(int i) {
         return i; //Because we are not using a Data base this should be the same as the ID
+    }
+
+    public void update(Contact[] contacts) {
+        list.clear();
+        if (contacts != null) {
+            for (Contact contact : contacts) {
+                list.add(contact);
+            }
+        }
     }
 
     @Override

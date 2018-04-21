@@ -1,6 +1,8 @@
 package markovic.milorad.chataplication;
 
 import android.content.Intent;
+import android.content.res.Resources;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -17,7 +19,9 @@ import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import markovic.milorad.chataplication.ContactsActivityPackage.Contact;
 import markovic.milorad.chataplication.ContactsActivityPackage.ContactsActivity;
+import markovic.milorad.chataplication.DatabasePackage.ContactDbHelper;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
 
@@ -27,6 +31,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     Button registerButton;
     Spinner spinner;
     DatePicker datePicker;
+
+    public static boolean isEmailValid(String email) {
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +66,26 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         Log.d(getResources().getString(R.string.BUTTON_LOG_TAG), getResources().getString(R.string.BUTTON_LOG_MESSAGE).toString());
-        Intent contactsActivity = new Intent(this, ContactsActivity.class);
-        startActivity(contactsActivity);
+
+        Contact newContact = new Contact(username.getText().toString(), ((EditText) findViewById(R.id.registerActEditFirstName)).getText().toString(), ((EditText) findViewById(R.id.registerActEditLastName)).getText().toString(), 99);
+        ContactDbHelper mdbHelper = new ContactDbHelper(this);
+//TODO: Izbaciti mdbHelper.insert(); i zameniti sa INSRT INTO comandom
+        mdbHelper.insert(newContact);
+
+        SQLiteDatabase mdb = mdbHelper.getWritableDatabase();
+        Resources res = this.getResources();
+/*
+        mdb.execSQL("INSERT or replace INTO " + res.getString(R.string.TABLE_NAME) + " (" +
+                res.getString(R.string.COLUMN_CONTACT_ID) +
+                res.getString(R.string.COLUMN_USERNAME) +
+                res.getString(R.string.COLUMN_FIRSTNAME) +
+                res.getString(R.string.COLUMN_LASTNAME) + ") " +
+                "VALUES (" + newContact.getId() + ", " + newContact.getName() + ", " + newContact.getFirstName() + ", " + newContact.getLastName() + ")" );
+*/
+//        mdb.execSQL("INSERT or replace INTO " + res.getString(R.string.TABLE_NAME) + " (" + newContact.getId() + ", " + newContact.getName() + ", " + newContact.getFirstName() + ", " + newContact.getLastName() + ")");
+
+        Intent mainActivity = new Intent(this, MainActivity.class);
+        startActivity(mainActivity);
         finish();
     }
 
@@ -81,11 +110,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             registerButton.setEnabled(false);
         }
     }
-
-    public static boolean isEmailValid(String email) {
-        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
 }
+
+//TODO: Back na RegisterActivitiju Treba da vraca na Login, Ili da izlazi iz aplikacije?
