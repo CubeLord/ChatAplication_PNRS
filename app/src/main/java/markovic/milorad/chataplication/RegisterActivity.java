@@ -20,7 +20,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import markovic.milorad.chataplication.ContactsActivityPackage.Contact;
-import markovic.milorad.chataplication.ContactsActivityPackage.ContactsActivity;
 import markovic.milorad.chataplication.DatabasePackage.ContactDbHelper;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
@@ -67,9 +66,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         Log.d(getResources().getString(R.string.BUTTON_LOG_TAG), getResources().getString(R.string.BUTTON_LOG_MESSAGE).toString());
 
-        Contact newContact = new Contact(username.getText().toString(), ((EditText) findViewById(R.id.registerActEditFirstName)).getText().toString(), ((EditText) findViewById(R.id.registerActEditLastName)).getText().toString(), 99);
+        Contact newContact = new Contact(username.getText().toString(), ((EditText) findViewById(R.id.registerActEditFirstName)).getText().toString(), ((EditText) findViewById(R.id.registerActEditLastName)).getText().toString(), 98);
         ContactDbHelper mdbHelper = new ContactDbHelper(this);
-//TODO: Izbaciti mdbHelper.insert(); i zameniti sa INSRT INTO comandom
+//TODO: Izbaciti mdbHelper.insert(); i zameniti sa INSRT INTO comandom - RAZLOG ZASTO TRENUTNO NE RADI UBACIVANJE JESTE ZBOG ID-A
         mdbHelper.insert(newContact);
 
         SQLiteDatabase mdb = mdbHelper.getWritableDatabase();
@@ -112,4 +111,4 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 }
 
-//TODO: Back na RegisterActivitiju Treba da vraca na Login, Ili da izlazi iz aplikacije?
+//TODO: Back na RegisterActivitiju Treba da vraca na Login, Ili da izlazi iz aplikacije - Pitaj Asistente?

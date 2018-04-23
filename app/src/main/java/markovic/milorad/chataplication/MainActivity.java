@@ -1,6 +1,8 @@
 package markovic.milorad.chataplication;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -9,8 +11,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import markovic.milorad.chataplication.ContactsActivityPackage.ContactsActivity;
+import markovic.milorad.chataplication.DatabasePackage.ContactDbHelper;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
 
@@ -18,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button register;
     EditText username;
     EditText password;
+    Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         register = findViewById(R.id.mainActButtonRegister);
         username = findViewById(R.id.mainActEditUsername);
         password = findViewById(R.id.mainActEditPassword);
+        toast = null;
 
         login.setOnClickListener(this);
         register.setOnClickListener(this);
@@ -48,10 +54,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.mainActButtonLogin:
-                Intent contacts = new Intent(this, ContactsActivity.class);
-                startActivity(contacts);
-                finish();
+                ContactDbHelper mdbHelper = new ContactDbHelper(this);
+                SQLiteDatabase db = mdbHelper.getReadableDatabase();
 
+
+                Cursor cursor = db.query(getResources().getString(R.string.TABLE_NAME), null, getResources().getString(R.string.COLUMN_USERNAME) + "=?", new String[]{username.getText().toString()}, null, null, null);
+                cursor.moveToLast();
+
+                try {
+                    int id = cursor.getInt(cursor.getColumnIndex(getResources().getString(R.string.COLUMN_CONTACT_ID)));
+                    Intent contacts = new Intent(this, ContactsActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("Login_ID", Integer.toString(id));
+                    contacts.putExtras(b);
+                    startActivity(contacts);
+                    finish();
+                } catch (Exception e) {
+                    if (toast != null) toast.cancel();
+                    toast = Toast.makeText(this, getResources().getString(R.string.WRONT_IDENTIFICATION_TOAST), Toast.LENGTH_LONG);
+                    toast.show();
+                }
                 break;
         }
     }

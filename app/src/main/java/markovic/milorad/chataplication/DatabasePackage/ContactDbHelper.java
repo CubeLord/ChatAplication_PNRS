@@ -6,7 +6,6 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import markovic.milorad.chataplication.ContactsActivityPackage.Contact;
 import markovic.milorad.chataplication.R;

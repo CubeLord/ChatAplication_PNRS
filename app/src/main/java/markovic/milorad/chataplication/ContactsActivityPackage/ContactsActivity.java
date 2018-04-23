@@ -17,6 +17,7 @@ public class ContactsActivity extends AppCompatActivity implements View.OnClickL
     public static ContactsActivity contactsActivity;
     public static ContactsAdapter mAdapter;
     public static ContactDbHelper mdbHelper;
+    public int SharedPreff;
     ListView list;
 
     @Override
@@ -24,13 +25,15 @@ public class ContactsActivity extends AppCompatActivity implements View.OnClickL
         super.onResume();
 
         Contact[] contacts = mdbHelper.readContacts();
-        mAdapter.update(contacts);
+        mAdapter.update(removeLogedIn(contacts));
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
+
+        SharedPreff = Integer.parseInt(getIntent().getExtras().getString("Login_ID"));
 
         Button logout = findViewById(R.id.contactsActButtonLogout);
         contactsActivity = this;
@@ -48,10 +51,24 @@ public class ContactsActivity extends AppCompatActivity implements View.OnClickL
         mdbHelper.insert(i);
 
         Contact[] cArray = mdbHelper.readContacts();
-        mAdapter.update(cArray);
-
+        mAdapter.update(removeLogedIn(cArray));
 
         logout.setOnClickListener(this);
+    }
+
+    public Contact[] removeLogedIn(Contact[] fullContacts) {
+        if (SharedPreff == -1) return fullContacts;
+
+        Contact[] ncArray = new Contact[fullContacts.length - 1];
+        int x = 0;
+        for (int j = 0; j < fullContacts.length; j++) {
+            if (fullContacts[j].getId() != SharedPreff) {
+                ncArray[x] = fullContacts[j];
+                x++;
+            }
+        }
+
+        return ncArray;
     }
 
     @Override
@@ -74,8 +91,5 @@ public class ContactsActivity extends AppCompatActivity implements View.OnClickL
 }
 
 //TODO: Ubaciti Message Tabelu (koristiti SECONDARY KEY za kontakte)
-//TODO: Kada se korisnik Login-uje on se ne pojavkljuje medju kontaktima
-//TODO: Nakon uspesne registracije korisnik se prosledjuje na Login aktiviti
 //TODO: U Register aktivitiju za unos novog kontakta koristiti INSERT SQL komandu (my bad)
-//TODO: Tokom Login-a proveravamo da li se korisnik nalazi u bazi, ako se nalazi onda njegov ID sacuvati kao SHAREDPREFF, ovaj podatak ce se koristiti da se ne ispisuje medju kontaktima ulogovani korisnik i za trazenje poruka. Ako se korisnik ne nalazi u bazi onda mu ispisati poruku i ostaviti ka ga login activitiju
 //TODO: Kada korisnik odabere kontakt iz liste, prikazuju se poruke koje za ID-jeve sender-a i receiver-a imaju korisnika i njegovog odabranog kontakta (ID korisnika je u SHAREDPREFF) (za ovo koristiti SELECT SQL komandu sa INNER J0IN dodatkom)
