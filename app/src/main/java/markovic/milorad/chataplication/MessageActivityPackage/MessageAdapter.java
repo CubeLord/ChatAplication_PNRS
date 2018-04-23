@@ -33,7 +33,7 @@ public class MessageAdapter extends BaseAdapter {
         for (int i = 0; i < messages.length; i++) {
             col = rnd.nextInt(2) + 1;
             if (col == 1) {
-                list.add(new Message(messages[i], ContextCompat.getColor(context, R.color.colorWhite), 1));
+                list.add(new Message(messages[i], ContextCompat.getColor(context, R.color.colorTurquoise), 1));
             } else {
                 list.add(new Message(messages[i], ContextCompat.getColor(context, R.color.colorLightGrey), 0));
             }

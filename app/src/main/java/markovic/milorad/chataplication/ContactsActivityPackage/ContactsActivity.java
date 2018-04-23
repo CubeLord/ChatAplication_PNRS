@@ -43,12 +43,12 @@ public class ContactsActivity extends AppCompatActivity implements View.OnClickL
 
         mdbHelper = new ContactDbHelper(this);
 
-        Contact c = new Contact("CubeLord", "Milorad", "Markovic", 0);
+/*        Contact c = new Contact("CubeLord", "Milorad", "Markovic", 0);
         mdbHelper.insert(c);
         Contact s = new Contact("SuncevoDete", "Jelena", "Boroja", 1);
         mdbHelper.insert(s);
         Contact i = new Contact("IskeCode", "Vesna", "Isic", 3);
-        mdbHelper.insert(i);
+        mdbHelper.insert(i);*/
 
         Contact[] cArray = mdbHelper.readContacts();
         mAdapter.update(removeLogedIn(cArray));

@@ -66,7 +66,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.messageActButtonSend:
                 EditText msg = findViewById(R.id.messageActEditMessageText);
-                adapter.list.add(new Message(msg.getText().toString(), 0xffffffff, 1));
+                adapter.list.add(new Message(msg.getText().toString(), getResources().getColor(R.color.colorTurquoise), 1));
                 list.setSelection(adapter.getCount() - 1);
                 msg.setText("");
                 if (toast != null) toast.cancel();

@@ -24,12 +24,11 @@ public class ContactDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         Resources res = context.getResources();
         sqLiteDatabase.execSQL("CREATE TABLE " + res.getString(R.string.TABLE_NAME) + " (" +
-                res.getString(R.string.COLUMN_CONTACT_ID) + " INT PRIMARY KEY, " +
+                res.getString(R.string.COLUMN_CONTACT_ID) + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 res.getString(R.string.COLUMN_USERNAME) + " TEXT, " +
                 res.getString(R.string.COLUMN_FIRSTNAME) + " TEXT," +
                 res.getString(R.string.COLUMN_LASTNAME) + " TEXT);");
     }
-    //TODO: Sa AUTOINCREMENT-om ne radi ako baza vec ne postoji, fix that. ako je baza vec prije napravljena prazna, onda se otvori preko AI-a, ali kada dodam kontakte tada nece, i kada vratim opet bez AI-a i dalje nece. Pukne i kada probam da dodajem dok je prazna bez AI-a nakon sto sam obrisao bazu.
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
@@ -40,7 +39,6 @@ public class ContactDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues val = new ContentValues();
-        val.put(context.getResources().getString(R.string.COLUMN_CONTACT_ID), contact.getId());
         val.put(context.getResources().getString(R.string.COLUMN_USERNAME), contact.getName());
         val.put(context.getResources().getString(R.string.COLUMN_FIRSTNAME), contact.getFirstName());
         val.put(context.getResources().getString(R.string.COLUMN_LASTNAME), contact.getLastName());
