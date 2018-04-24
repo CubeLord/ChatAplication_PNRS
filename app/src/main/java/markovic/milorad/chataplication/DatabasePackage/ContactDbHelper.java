@@ -31,13 +31,19 @@ public class ContactDbHelper extends SQLiteOpenHelper {
                 res.getString(R.string.COLUMN_LASTNAME) + " TEXT);");
 
         sqLiteDatabase.execSQL("CREATE TABLE " + res.getString(R.string.MESSAGE_TABLE_NAME) + " (" +
-                res.getString(R.string.COLUMN_MESSAGE_ID) + " INTEGER PRIMARY KEY, " +
-                res.getString(R.string.COLUMN_SENDER_ID) + " INTEGER, " +
-                res.getString(R.string.COLUMN_RECEIVER_ID) + " INTEGER," +
-                "FOREIGN KEY(" + res.getString(R.string.COLUMN_SENDER_ID) + ") REFERENCES " +
-                res.getString(R.string.TABLE_NAME) + "(" + res.getString(R.string.COLUMN_CONTACT_ID) + "), " +
-                "FOREIGN KEY(" + res.getString(R.string.COLUMN_RECEIVER_ID) + ") REFERENCES " +
-                res.getString(R.string.TABLE_NAME) + "(" + res.getString(R.string.COLUMN_CONTACT_ID) + ")" +  ");");
+                        res.getString(R.string.COLUMN_MESSAGE_ID) + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        res.getString(R.string.COLUMN_SENDER_ID) + " INTEGER, " +
+                        res.getString(R.string.COLUMN_RECEIVER_ID) + " INTEGER," +
+                        res.getString(R.string.COLUMN_MESSAGE) + " TEXT);");
+
+//        sqLiteDatabase.execSQL("CREATE TABLE " + res.getString(R.string.MESSAGE_TABLE_NAME) + " (" +
+//                res.getString(R.string.COLUMN_MESSAGE_ID) + " INTEGER PRIMARY KEY, " +
+//                res.getString(R.string.COLUMN_SENDER_ID) + " INTEGER, " +
+//                res.getString(R.string.COLUMN_RECEIVER_ID) + " INTEGER," +
+//                "FOREIGN KEY(" + res.getString(R.string.COLUMN_SENDER_ID) + ") REFERENCES " +
+//                res.getString(R.string.TABLE_NAME) + "(" + res.getString(R.string.COLUMN_CONTACT_ID) + "), " +
+//                "FOREIGN KEY(" + res.getString(R.string.COLUMN_RECEIVER_ID) + ") REFERENCES " +
+//                res.getString(R.string.TABLE_NAME) + "(" + res.getString(R.string.COLUMN_CONTACT_ID) + ")" + ");");
     }
 
     @Override
@@ -61,14 +67,12 @@ public class ContactDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues val = new ContentValues();
-        val.put(context.getResources().getString(R.string.COLUMN_MESSAGE_ID), message.getId());
         val.put(context.getResources().getString(R.string.COLUMN_SENDER_ID), message.getSender_id());
         val.put(context.getResources().getString(R.string.COLUMN_RECEIVER_ID), message.getReceiver_id());
         val.put(context.getResources().getString(R.string.COLUMN_MESSAGE), message.getMessageText());
 
         db.insert(context.getResources().getString(R.string.MESSAGE_TABLE_NAME), null, val);
         close();
-
     }
 
     public Contact[] readContacts() {
@@ -113,7 +117,7 @@ public class ContactDbHelper extends SQLiteOpenHelper {
         String receiver_id = cursor.getString(cursor.getColumnIndex(context.getResources().getString(R.string.COLUMN_RECEIVER_ID)));
         String message = cursor.getString(cursor.getColumnIndex(context.getResources().getString(R.string.COLUMN_MESSAGE)));
 
-        return new Message(message, 0xffffff, 0, Integer.parseInt(message_id), Integer.parseInt(sender_id), Integer.parseInt(receiver_id));
+        return new Message(message, context.getResources().getColor(R.color.colorLightGrey), 0, Integer.parseInt(message_id), Integer.parseInt(sender_id), Integer.parseInt(receiver_id));
     }
 
 

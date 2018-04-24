@@ -32,7 +32,8 @@
     <string name="EDITTEXT_LOG_PASSWORD_MESSAGE">Password = </string>
     <string name="TEXTVIEW_CONTACTS_LIST_NAME">My Chat List</string>
     <string name="BUNDLE_CONTACT_NAME">NAME</string>
-    <string name="BUNDLE_CONTACT_ID">ID</string>
+    <string name="BUNDLE_RECEIVER_ID">RID</string>
+    <string name="BUNDLE_SENDER_ID">SID</string>
 
     <string name="DATABASE_NAME">contacts.db</string>
     <integer name="DATABASE_VERSION">1</integer>

@@ -1,6 +1,7 @@
 package markovic.milorad.chataplication.MessageActivityPackage;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import markovic.milorad.chataplication.ContactsActivityPackage.ContactsActivity;
+import markovic.milorad.chataplication.DatabasePackage.ContactDbHelper;
 import markovic.milorad.chataplication.MainActivity;
 import markovic.milorad.chataplication.R;
 
@@ -23,22 +25,40 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
     Toast toast = null;
     ListView list;
     MessageAdapter adapter;
-    int user;
+    int reciver;
+    int sender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
+        reciver = Integer.parseInt(getIntent().getExtras().get(this.getString(R.string.BUNDLE_RECEIVER_ID)).toString());
+        sender = Integer.parseInt(getIntent().getExtras().get(this.getString(R.string.BUNDLE_SENDER_ID)).toString());
 
         Button logout = findViewById(R.id.messageActButtonLogout);
         Button send = findViewById(R.id.messageActButtonSend);
         EditText messageText = findViewById(R.id.messageActEditMessageText);
         TextView contactName = findViewById(R.id.messageActTextViewName);
-        //Bundle bundle = getIntent().getExtras();
 
         list = findViewById(R.id.messageActListView);
         adapter = new MessageAdapter((this));
         list.setAdapter(adapter);
+        list.setSelection(adapter.getCount() - 1);
+
+        ContactDbHelper helper = new ContactDbHelper(this);
+        Message[] messages = helper.readMessages();
+
+        for (int i = 0; i < messages.length; i++) {
+            Log.d("Debuging", "message sender=" + Integer.toString(messages[i].getSender_id()) + " this sender=" + Integer.toString(sender));
+            if (messages[i].getSender_id() == sender) {
+                messages[i].setPos(1);
+                messages[i].setColor(getResources().getColor(R.color.colorTurquoise));
+            } else if (messages[i].getReceiver_id() == reciver) {
+                messages[i].setPos(0);
+                messages[i].setColor(getResources().getColor(R.color.colorLightGrey));
+            }
+        }
+        adapter.update(messages);
 
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -50,7 +70,10 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         });
 
         contactName.setText(getIntent().getExtras().get(this.getString(R.string.BUNDLE_CONTACT_NAME)).toString());
-        user = Integer.parseInt(getIntent().getExtras().get(this.getString(R.string.BUNDLE_CONTACT_ID)).toString());
+
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+//        TODO: Ucitati sve poruke iz baze i ispisati ih na Message Activitiju
 
         messageText.addTextChangedListener(this);
         send.setOnClickListener(this);
@@ -69,7 +92,11 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.messageActButtonSend:
                 EditText msg = findViewById(R.id.messageActEditMessageText);
-//                adapter.list.add(new Message(msg.getText().toString(), getResources().getColor(R.color.colorTurquoise), 1, /*message_id*/, /*sender_id*/, user /*receiver_id*/));
+                Message m = new Message(msg.getText().toString(), getResources().getColor(R.color.colorTurquoise), 1, 99, sender, reciver);
+                ContactDbHelper helper = new ContactDbHelper(this);
+                helper.insert(m);
+
+                adapter.list.add(m);
                 list.setSelection(adapter.getCount() - 1);
                 msg.setText("");
                 if (toast != null) toast.cancel();

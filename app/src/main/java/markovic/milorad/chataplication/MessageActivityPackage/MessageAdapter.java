@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +42,15 @@ public class MessageAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         return list.size();
+    }
+
+    public void update(Message[] messages) {
+        list.clear();
+        if (messages != null) {
+            for (Message message : messages) {
+                list.add(message);
+            }
+        }
     }
 
     @Override

@@ -22,9 +22,11 @@ import markovic.milorad.chataplication.R;
 public class ContactsAdapter extends BaseAdapter {
     ArrayList<Contact> list;
     Context context;
+    int sender;
 
-    ContactsAdapter(Context c) {
+    ContactsAdapter(Context c, int sender_id) {
         context = c;
+        sender = sender_id;
         list = new ArrayList<Contact>();
 
 /*
@@ -89,8 +91,8 @@ public class ContactsAdapter extends BaseAdapter {
 
                 Bundle bundle = new Bundle();
                 bundle.putString(context.getString(R.string.BUNDLE_CONTACT_NAME), contact.name);
-//TODO: Get Sender_id to the adapter and send it with bundle
-                bundle.putString(context.getString(R.string.BUNDLE_CONTACT_ID),Integer.toString(contact.getId()));
+                bundle.putString(context.getString(R.string.BUNDLE_RECEIVER_ID), Integer.toString(contact.getId()));
+                bundle.putString(context.getString(R.string.BUNDLE_SENDER_ID), Integer.toString(sender));
                 Intent messageAct = new Intent(context, MessageActivity.class);
                 messageAct.putExtras(bundle);
 

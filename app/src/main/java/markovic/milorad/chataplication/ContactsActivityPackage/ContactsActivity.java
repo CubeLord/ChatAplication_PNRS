@@ -38,7 +38,7 @@ public class ContactsActivity extends AppCompatActivity implements View.OnClickL
         Button logout = findViewById(R.id.contactsActButtonLogout);
         contactsActivity = this;
         list = findViewById(R.id.contactsActListView);
-        mAdapter = new ContactsAdapter(this);
+        mAdapter = new ContactsAdapter(this, SharedPreff);
         list.setAdapter(mAdapter);
 
         mdbHelper = new ContactDbHelper(this);
