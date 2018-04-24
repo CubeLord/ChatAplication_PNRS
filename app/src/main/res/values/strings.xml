@@ -32,11 +32,17 @@
     <string name="EDITTEXT_LOG_PASSWORD_MESSAGE">Password = </string>
     <string name="TEXTVIEW_CONTACTS_LIST_NAME">My Chat List</string>
     <string name="BUNDLE_CONTACT_NAME">NAME</string>
+    <string name="BUNDLE_CONTACT_ID">ID</string>
 
     <string name="DATABASE_NAME">contacts.db</string>
     <integer name="DATABASE_VERSION">1</integer>
     <string name="TABLE_NAME">contact</string>
+    <string name="MESSAGE_TABLE_NAME">message</string>
     <string name="COLUMN_CONTACT_ID">Contact_id</string>
+    <string name="COLUMN_MESSAGE_ID">Message_id</string>
+    <string name="COLUMN_SENDER_ID">Sender_id</string>
+    <string name="COLUMN_RECEIVER_ID">Receiver_id</string>
+    <string name="COLUMN_MESSAGE">Message</string>
     <string name="COLUMN_USERNAME">Username</string>
     <string name="COLUMN_FIRSTNAME">Firstname</string>
     <string name="COLUMN_LASTNAME">Lastname</string>

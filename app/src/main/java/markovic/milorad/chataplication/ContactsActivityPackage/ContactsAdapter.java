@@ -89,6 +89,8 @@ public class ContactsAdapter extends BaseAdapter {
 
                 Bundle bundle = new Bundle();
                 bundle.putString(context.getString(R.string.BUNDLE_CONTACT_NAME), contact.name);
+//TODO: Get Sender_id to the adapter and send it with bundle
+                bundle.putString(context.getString(R.string.BUNDLE_CONTACT_ID),Integer.toString(contact.getId()));
                 Intent messageAct = new Intent(context, MessageActivity.class);
                 messageAct.putExtras(bundle);
 

@@ -23,6 +23,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
     Toast toast = null;
     ListView list;
     MessageAdapter adapter;
+    int user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,8 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         });
 
         contactName.setText(getIntent().getExtras().get(this.getString(R.string.BUNDLE_CONTACT_NAME)).toString());
+        user = Integer.parseInt(getIntent().getExtras().get(this.getString(R.string.BUNDLE_CONTACT_ID)).toString());
+
         messageText.addTextChangedListener(this);
         send.setOnClickListener(this);
         logout.setOnClickListener(this);
@@ -66,7 +69,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.messageActButtonSend:
                 EditText msg = findViewById(R.id.messageActEditMessageText);
-                adapter.list.add(new Message(msg.getText().toString(), getResources().getColor(R.color.colorTurquoise), 1));
+//                adapter.list.add(new Message(msg.getText().toString(), getResources().getColor(R.color.colorTurquoise), 1, /*message_id*/, /*sender_id*/, user /*receiver_id*/));
                 list.setSelection(adapter.getCount() - 1);
                 msg.setText("");
                 if (toast != null) toast.cancel();

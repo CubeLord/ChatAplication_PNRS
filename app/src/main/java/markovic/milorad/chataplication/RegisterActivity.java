@@ -71,7 +71,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 //TODO: Izbaciti mdbHelper.insert(); i zameniti sa INSRT INTO comandom - RAZLOG ZASTO TRENUTNO NE RADI UBACIVANJE JESTE ZBOG ID-A
         mdbHelper.insert(newContact);
 
-        SQLiteDatabase mdb = mdbHelper.getWritableDatabase();
+//        SQLiteDatabase mdb = mdbHelper.getWritableDatabase();
         Resources res = this.getResources();
 /*
         mdb.execSQL("INSERT or replace INTO " + res.getString(R.string.TABLE_NAME) + " (" +
