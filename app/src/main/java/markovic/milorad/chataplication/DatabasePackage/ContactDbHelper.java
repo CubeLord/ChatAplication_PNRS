@@ -31,19 +31,14 @@ public class ContactDbHelper extends SQLiteOpenHelper {
                 res.getString(R.string.COLUMN_LASTNAME) + " TEXT);");
 
         sqLiteDatabase.execSQL("CREATE TABLE " + res.getString(R.string.MESSAGE_TABLE_NAME) + " (" +
-                        res.getString(R.string.COLUMN_MESSAGE_ID) + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        res.getString(R.string.COLUMN_SENDER_ID) + " INTEGER, " +
-                        res.getString(R.string.COLUMN_RECEIVER_ID) + " INTEGER," +
-                        res.getString(R.string.COLUMN_MESSAGE) + " TEXT);");
-
-//        sqLiteDatabase.execSQL("CREATE TABLE " + res.getString(R.string.MESSAGE_TABLE_NAME) + " (" +
-//                res.getString(R.string.COLUMN_MESSAGE_ID) + " INTEGER PRIMARY KEY, " +
-//                res.getString(R.string.COLUMN_SENDER_ID) + " INTEGER, " +
-//                res.getString(R.string.COLUMN_RECEIVER_ID) + " INTEGER," +
-//                "FOREIGN KEY(" + res.getString(R.string.COLUMN_SENDER_ID) + ") REFERENCES " +
-//                res.getString(R.string.TABLE_NAME) + "(" + res.getString(R.string.COLUMN_CONTACT_ID) + "), " +
-//                "FOREIGN KEY(" + res.getString(R.string.COLUMN_RECEIVER_ID) + ") REFERENCES " +
-//                res.getString(R.string.TABLE_NAME) + "(" + res.getString(R.string.COLUMN_CONTACT_ID) + ")" + ");");
+                res.getString(R.string.COLUMN_MESSAGE_ID) + " INTEGER PRIMARY KEY, " +
+                res.getString(R.string.COLUMN_SENDER_ID) + " INTEGER, " +
+                res.getString(R.string.COLUMN_RECEIVER_ID) + " INTEGER," +
+                res.getString(R.string.COLUMN_MESSAGE) + " TEXT, " +
+                "FOREIGN KEY(" + res.getString(R.string.COLUMN_SENDER_ID) + ") REFERENCES " +
+                res.getString(R.string.TABLE_NAME) + "(" + res.getString(R.string.COLUMN_CONTACT_ID) + "), " +
+                "FOREIGN KEY(" + res.getString(R.string.COLUMN_RECEIVER_ID) + ") REFERENCES " +
+                res.getString(R.string.TABLE_NAME) + "(" + res.getString(R.string.COLUMN_CONTACT_ID) + ")" + ");");
     }
 
     @Override
