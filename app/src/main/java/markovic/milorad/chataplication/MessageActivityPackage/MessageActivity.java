@@ -47,18 +47,18 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
 
         ContactDbHelper helper = new ContactDbHelper(this);
         Message[] messages = helper.readMessages();
-
-        for (int i = 0; i < messages.length; i++) {
-            Log.d("Debuging", "message sender=" + Integer.toString(messages[i].getSender_id()) + " this sender=" + Integer.toString(sender));
-            if (messages[i].getSender_id() == sender) {
-                messages[i].setPos(1);
-                messages[i].setColor(getResources().getColor(R.color.colorTurquoise));
-            } else if (messages[i].getReceiver_id() == reciver) {
-                messages[i].setPos(0);
-                messages[i].setColor(getResources().getColor(R.color.colorLightGrey));
+        if(messages != null) {
+            for (int i = 0; i < messages.length; i++) {
+                if (messages[i].getSender_id() == sender) {
+                    messages[i].setPos(1);
+                    messages[i].setColor(getResources().getColor(R.color.colorTurquoise));
+                } else if (messages[i].getReceiver_id() == reciver) {
+                    messages[i].setPos(0);
+                    messages[i].setColor(getResources().getColor(R.color.colorLightGrey));
+                }
             }
+            adapter.update(messages);
         }
-        adapter.update(messages);
 
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
