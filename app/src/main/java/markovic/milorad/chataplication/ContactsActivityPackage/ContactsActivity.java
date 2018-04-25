@@ -90,6 +90,4 @@ public class ContactsActivity extends AppCompatActivity implements View.OnClickL
     }
 }
 
-//TODO: Ubaciti Message Tabelu (koristiti SECONDARY KEY za kontakte)
 //TODO: U Register aktivitiju za unos novog kontakta koristiti INSERT SQL komandu (my bad)
-//TODO: Kada korisnik odabere kontakt iz liste, prikazuju se poruke koje za ID-jeve sender-a i receiver-a imaju korisnika i njegovog odabranog kontakta (ID korisnika je u SHAREDPREFF) (za ovo koristiti SELECT SQL komandu sa INNER J0IN dodatkom)

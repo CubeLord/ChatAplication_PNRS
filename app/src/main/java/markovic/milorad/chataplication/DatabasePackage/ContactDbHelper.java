@@ -88,9 +88,16 @@ public class ContactDbHelper extends SQLiteOpenHelper {
         return contacts;
     }
 
-    public Message[] readMessages() {
+    public Message[] readMessages(int sender_id, int receiver_id) {
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(context.getResources().getString(R.string.MESSAGE_TABLE_NAME), null, null, null, null, null, null, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM (SELECT " + context.getResources().getString(R.string.COLUMN_MESSAGE_ID) + ", " + context.getResources().getString(R.string.COLUMN_MESSAGE) +
+                ", " + context.getResources().getString(R.string.COLUMN_RECEIVER_ID) +
+                " FROM " + context.getResources().getString(R.string.MESSAGE_TABLE_NAME) + " WHERE " + context.getResources().getString(R.string.COLUMN_RECEIVER_ID) + "=" + Integer.toString(receiver_id) +
+                " OR " + context.getResources().getString(R.string.COLUMN_RECEIVER_ID) + "=" + Integer.toString(sender_id) + ") AS t1 INNER JOIN (" +
+                "SELECT " + context.getResources().getString(R.string.COLUMN_MESSAGE_ID) + ", " + context.getResources().getString(R.string.COLUMN_SENDER_ID) + " FROM " +
+                context.getResources().getString(R.string.MESSAGE_TABLE_NAME) + " WHERE " + context.getResources().getString(R.string.COLUMN_SENDER_ID) + "=" + Integer.toString(sender_id) +
+                " OR " + context.getResources().getString(R.string.COLUMN_SENDER_ID) + "=" + Integer.toString(receiver_id) + ") AS t2 ON t1." +
+                context.getResources().getString(R.string.COLUMN_MESSAGE_ID) + "=" + "t2." + context.getResources().getString(R.string.COLUMN_MESSAGE_ID) + ";", null, null);
 
         if (cursor.getCount() <= 0) {
             return null;
@@ -100,6 +107,16 @@ public class ContactDbHelper extends SQLiteOpenHelper {
         int i = 0;
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
             messages[i++] = createMessage(cursor);
+        }
+
+        for (i = 0; i < messages.length; i++) {
+            if (messages[i].getSender_id() == sender_id) {
+                messages[i].setPos(1);
+                messages[i].setColor(context.getResources().getColor(R.color.colorTurquoise));
+            } else if (messages[i].getReceiver_id() == receiver_id) {
+                messages[i].setPos(0);
+                messages[i].setColor(context.getResources().getColor(R.color.colorLightGrey));
+            }
         }
 
         close();

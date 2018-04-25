@@ -46,17 +46,8 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         list.setSelection(adapter.getCount() - 1);
 
         ContactDbHelper helper = new ContactDbHelper(this);
-        Message[] messages = helper.readMessages();
-        if(messages != null) {
-            for (int i = 0; i < messages.length; i++) {
-                if (messages[i].getSender_id() == sender) {
-                    messages[i].setPos(1);
-                    messages[i].setColor(getResources().getColor(R.color.colorTurquoise));
-                } else if (messages[i].getReceiver_id() == reciver) {
-                    messages[i].setPos(0);
-                    messages[i].setColor(getResources().getColor(R.color.colorLightGrey));
-                }
-            }
+        Message[] messages = helper.readMessages(sender, reciver);
+        if (messages != null) {
             adapter.update(messages);
         }
 
@@ -72,8 +63,6 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         contactName.setText(getIntent().getExtras().get(this.getString(R.string.BUNDLE_CONTACT_NAME)).toString());
 
         SQLiteDatabase db = helper.getReadableDatabase();
-
-//        TODO: Ucitati sve poruke iz baze i ispisati ih na Message Activitiju
 
         messageText.addTextChangedListener(this);
         send.setOnClickListener(this);
