@@ -68,20 +68,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         Contact newContact = new Contact(username.getText().toString(), ((EditText) findViewById(R.id.registerActEditFirstName)).getText().toString(), ((EditText) findViewById(R.id.registerActEditLastName)).getText().toString(), 98);
         ContactDbHelper mdbHelper = new ContactDbHelper(this);
-//TODO: Izbaciti mdbHelper.insert(); i zameniti sa INSRT INTO comandom - RAZLOG ZASTO TRENUTNO NE RADI UBACIVANJE JESTE ZBOG ID-A
-        mdbHelper.insert(newContact);
 
-//        SQLiteDatabase mdb = mdbHelper.getWritableDatabase();
+        SQLiteDatabase mdb = mdbHelper.getWritableDatabase();
         Resources res = this.getResources();
-/*
-        mdb.execSQL("INSERT or replace INTO " + res.getString(R.string.TABLE_NAME) + " (" +
-                res.getString(R.string.COLUMN_CONTACT_ID) +
-                res.getString(R.string.COLUMN_USERNAME) +
-                res.getString(R.string.COLUMN_FIRSTNAME) +
+        mdb.execSQL("INSERT OR REPLACE INTO " + res.getString(R.string.TABLE_NAME) + "(" +
+                res.getString(R.string.COLUMN_USERNAME) + ", " +
+                res.getString(R.string.COLUMN_FIRSTNAME) + ", " +
                 res.getString(R.string.COLUMN_LASTNAME) + ") " +
-                "VALUES (" + newContact.getId() + ", " + newContact.getName() + ", " + newContact.getFirstName() + ", " + newContact.getLastName() + ")" );
-*/
-//        mdb.execSQL("INSERT or replace INTO " + res.getString(R.string.TABLE_NAME) + " (" + newContact.getId() + ", " + newContact.getName() + ", " + newContact.getFirstName() + ", " + newContact.getLastName() + ")");
+                "VALUES (\"" + newContact.getName() + "\", \"" + newContact.getFirstName() + "\", \"" + newContact.getLastName() + "\");");
 
         Intent mainActivity = new Intent(this, MainActivity.class);
         startActivity(mainActivity);

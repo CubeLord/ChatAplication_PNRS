@@ -89,5 +89,3 @@ public class ContactsActivity extends AppCompatActivity implements View.OnClickL
 
     }
 }
-
-//TODO: U Register aktivitiju za unos novog kontakta koristiti INSERT SQL komandu (my bad)

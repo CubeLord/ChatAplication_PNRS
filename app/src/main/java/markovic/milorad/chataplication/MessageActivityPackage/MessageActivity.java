@@ -116,4 +116,3 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
 
 
 }
-
