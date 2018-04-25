@@ -45,7 +45,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         list.setAdapter(adapter);
         list.setSelection(adapter.getCount() - 1);
 
-        ContactDbHelper helper = new ContactDbHelper(this);
+        final ContactDbHelper helper = new ContactDbHelper(this);
         Message[] messages = helper.readMessages(sender, reciver);
         if (messages != null) {
             adapter.update(messages);
@@ -54,6 +54,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                helper.deleteMessage((int)adapter.getItemId(i));
                 adapter.remove(i);
                 adapter.notifyDataSetChanged();
                 return true;

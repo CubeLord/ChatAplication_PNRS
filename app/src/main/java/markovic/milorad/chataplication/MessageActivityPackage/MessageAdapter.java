@@ -2,6 +2,8 @@ package markovic.milorad.chataplication.MessageActivityPackage;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.view.Gravity;
@@ -15,6 +17,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Random;
 
+import markovic.milorad.chataplication.ContactsActivityPackage.Contact;
+import markovic.milorad.chataplication.DatabasePackage.ContactDbHelper;
 import markovic.milorad.chataplication.R;
 
 public class MessageAdapter extends BaseAdapter {
@@ -60,7 +64,7 @@ public class MessageAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        return i;
+        return list.get(i).getId();
     }
 
     public void remove(int i) {
