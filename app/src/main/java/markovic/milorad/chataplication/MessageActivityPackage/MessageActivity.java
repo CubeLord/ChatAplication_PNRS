@@ -1,6 +1,7 @@
 package markovic.milorad.chataplication.MessageActivityPackage;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -85,7 +86,8 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
                 Message m = new Message(msg.getText().toString(), getResources().getColor(R.color.colorTurquoise), 1, 99, sender, reciver);
                 ContactDbHelper helper = new ContactDbHelper(this);
                 helper.insert(m);
-
+                Message[] messages = helper.readMessages(m.getSender_id(), m.getReceiver_id());
+                m.setId(messages[messages.length-1].getId());
                 adapter.list.add(m);
                 list.setSelection(adapter.getCount() - 1);
                 msg.setText("");

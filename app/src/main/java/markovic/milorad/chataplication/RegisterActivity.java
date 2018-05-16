@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,7 +15,12 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,6 +36,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     Button registerButton;
     Spinner spinner;
     DatePicker datePicker;
+    private Handler handler;
+    private HttpHelper httpHelper;
 
     public static boolean isEmailValid(String email) {
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
@@ -56,6 +64,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         email = findViewById(R.id.registerActEditEmail);
         registerButton = findViewById(R.id.registerActButtonRegister);
 
+        handler = new Handler();
+        httpHelper = new HttpHelper();
+
         registerButton.setOnClickListener(this);
         username.addTextChangedListener(this);
         password.addTextChangedListener(this);
@@ -68,6 +79,31 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         Contact newContact = new Contact(username.getText().toString(), ((EditText) findViewById(R.id.registerActEditFirstName)).getText().toString(), ((EditText) findViewById(R.id.registerActEditLastName)).getText().toString(), 98);
         ContactDbHelper mdbHelper = new ContactDbHelper(this);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("username", username.getText().toString());
+                    jsonObject.put("password", password.getText().toString());
+                    jsonObject.put("email", email.getText().toString());
+                    final boolean success = httpHelper.postJSONObjectFromURL(getResources().getString(R.string.BASE_URL) + "/register", jsonObject);
+                    handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(RegisterActivity.this, "Adding new user: " + success, Toast.LENGTH_LONG).show();
+                }
+                });
+                    } catch (JSONException e) {
+                        Log.d("Debugging","JSONException happened");
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        Log.d("Debugging","IOException happened");
+                        e.printStackTrace();
+                    }
+            }
+        }).start();
 
         SQLiteDatabase mdb = mdbHelper.getWritableDatabase();
         Resources res = this.getResources();
@@ -103,6 +139,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             registerButton.setEnabled(false);
         }
     }
+
+
 }
 
-//TODO: Back na RegisterActivitiju Treba da vraca na Login, Ili da izlazi iz aplikacije - Pitaj Asistente?
+// TODO: Back na RegisterActivitiju Treba da vraca na Login, Ili da izlazi iz aplikacije - Pitaj Asistente?

@@ -48,6 +48,12 @@
     <string name="COLUMN_FIRSTNAME">Firstname</string>
     <string name="COLUMN_LASTNAME">Lastname</string>
 
+    <string name="BASE_URL">http://18.205.194.168:80</string>
+    <string name="REGISTER_EXTENSION">/register</string>
+    <string name="LOGIN_EXTENSION">/login</string>
+    <string name="CONTACTS_EXTENSION">/contacts</string>
+    <string name="MESSAGE_EXTENSION">/message</string>
+
     <string-array name="dummyMessages">
         <item>Message 1</item>
         <item>Message 2</item>

@@ -25,13 +25,13 @@ public class ContactDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         Resources res = context.getResources();
         sqLiteDatabase.execSQL("CREATE TABLE " + res.getString(R.string.TABLE_NAME) + " (" +
-                res.getString(R.string.COLUMN_CONTACT_ID) + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                 res.getString(R.string.COLUMN_CONTACT_ID) + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 res.getString(R.string.COLUMN_USERNAME) + " TEXT, " +
                 res.getString(R.string.COLUMN_FIRSTNAME) + " TEXT," +
                 res.getString(R.string.COLUMN_LASTNAME) + " TEXT);");
 
         sqLiteDatabase.execSQL("CREATE TABLE " + res.getString(R.string.MESSAGE_TABLE_NAME) + " (" +
-                res.getString(R.string.COLUMN_MESSAGE_ID) + " INTEGER PRIMARY KEY, " +
+                res.getString(R.string.COLUMN_MESSAGE_ID) + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 res.getString(R.string.COLUMN_SENDER_ID) + " INTEGER, " +
                 res.getString(R.string.COLUMN_RECEIVER_ID) + " INTEGER," +
                 res.getString(R.string.COLUMN_MESSAGE) + " TEXT, " +
