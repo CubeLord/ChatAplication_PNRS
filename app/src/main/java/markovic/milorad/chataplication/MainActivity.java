@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,6 +13,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 import markovic.milorad.chataplication.ContactsActivityPackage.ContactsActivity;
 import markovic.milorad.chataplication.DatabasePackage.ContactDbHelper;
@@ -23,6 +29,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText username;
     EditText password;
     Toast toast;
+    private Handler handler;
+    private HttpHelper httpHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +42,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         username = findViewById(R.id.mainActEditUsername);
         password = findViewById(R.id.mainActEditPassword);
         toast = null;
+
+        handler = new Handler();
+        httpHelper = new HttpHelper();
 
         login.setOnClickListener(this);
         register.setOnClickListener(this);
@@ -57,9 +68,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ContactDbHelper mdbHelper = new ContactDbHelper(this);
                 SQLiteDatabase db = mdbHelper.getReadableDatabase();
 
-
                 Cursor cursor = db.query(getResources().getString(R.string.TABLE_NAME), null, getResources().getString(R.string.COLUMN_USERNAME) + "=?", new String[]{username.getText().toString()}, null, null, null);
                 cursor.moveToLast();
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        JSONObject jsonObject = new JSONObject();
+                        try {
+                            jsonObject.put("username", username.getText().toString());
+                            jsonObject.put("password", password.getText().toString());
+                            final boolean success = httpHelper.postJSONObjectFromURL(getResources().getString(R.string.BASE_URL) + "/login", jsonObject);
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(MainActivity.this, "Login successful: " + success, Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        } catch (JSONException e) {
+                            Log.d("Debugging","JSONException happened");
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            Log.d("Debugging","IOException happened");
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
 
                 try {
                     int id = cursor.getInt(cursor.getColumnIndex(getResources().getString(R.string.COLUMN_CONTACT_ID)));
