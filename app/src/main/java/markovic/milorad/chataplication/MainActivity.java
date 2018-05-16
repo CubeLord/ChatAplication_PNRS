@@ -18,6 +18,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.concurrent.CountDownLatch;
 
 import markovic.milorad.chataplication.ContactsActivityPackage.ContactsActivity;
 import markovic.milorad.chataplication.DatabasePackage.ContactDbHelper;
@@ -31,6 +33,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Toast toast;
     private Handler handler;
     private HttpHelper httpHelper;
+
+    final String[] sessionid = new String[1];
+    final CountDownLatch countDownLatch = new CountDownLatch(1);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,14 +77,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Cursor cursor = db.query(getResources().getString(R.string.TABLE_NAME), null, getResources().getString(R.string.COLUMN_USERNAME) + "=?", new String[]{username.getText().toString()}, null, null, null);
                 cursor.moveToLast();
 
-                new Thread(new Runnable() {
+                Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
                         JSONObject jsonObject = new JSONObject();
                         try {
                             jsonObject.put("username", username.getText().toString());
                             jsonObject.put("password", password.getText().toString());
-                            final boolean success = httpHelper.postJSONObjectFromURL(getResources().getString(R.string.BASE_URL) + "/login", jsonObject);
+                            HttpHelperReturn httpHelperReturn = (httpHelper.postJSONObjectFromURL(getResources().getString(R.string.BASE_URL) + "/login", jsonObject));
+                            final boolean success = httpHelperReturn.isSuccess();
+                            Log.d("Debugging", "SessionID in MainActivity: " + httpHelperReturn.getSessionid());
+                            sessionid[0] = httpHelperReturn.getSessionid();
+                            countDownLatch.countDown();
+
                             handler.post(new Runnable() {
                                 @Override
                                 public void run() {
@@ -93,13 +104,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             e.printStackTrace();
                         }
                     }
-                }).start();
-
+                });
+                thread.start();
                 try {
+                    countDownLatch.await();
                     int id = cursor.getInt(cursor.getColumnIndex(getResources().getString(R.string.COLUMN_CONTACT_ID)));
                     Intent contacts = new Intent(this, ContactsActivity.class);
                     Bundle b = new Bundle();
                     b.putString("Login_ID", Integer.toString(id));
+                    Log.d("Debugging", "Session id in MainActivity is: " + sessionid[0]);
+                    String sessionid_0 = sessionid[0];
+                    b.putString("Session_ID", sessionid_0);
                     contacts.putExtras(b);
                     startActivity(contacts);
                     finish();
