@@ -18,7 +18,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.concurrent.CountDownLatch;
 
 import markovic.milorad.chataplication.ContactsActivityPackage.ContactsActivity;
@@ -26,6 +25,8 @@ import markovic.milorad.chataplication.DatabasePackage.ContactDbHelper;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
 
+    final String[] sessionid = new String[1];
+    final CountDownLatch countDownLatch = new CountDownLatch(1);
     Button login;
     Button register;
     EditText username;
@@ -33,10 +34,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Toast toast;
     private Handler handler;
     private HttpHelper httpHelper;
-
-    final String[] sessionid = new String[1];
-    final CountDownLatch countDownLatch = new CountDownLatch(1);
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,10 +94,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 }
                             });
                         } catch (JSONException e) {
-                            Log.d("Debugging","JSONException happened");
+                            Log.d("Debugging", "JSONException happened");
                             e.printStackTrace();
                         } catch (IOException e) {
-                            Log.d("Debugging","IOException happened");
+                            Log.d("Debugging", "IOException happened");
                             e.printStackTrace();
                         }
                     }
@@ -112,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Intent contacts = new Intent(this, ContactsActivity.class);
                     Bundle b = new Bundle();
                     b.putString("Login_ID", Integer.toString(id));
-                    Log.d("Debugging", "Session id in MainActivity is: " + sessionid[0]);
                     String sessionid_0 = sessionid[0];
                     b.putString("Session_ID", sessionid_0);
                     contacts.putExtras(b);
