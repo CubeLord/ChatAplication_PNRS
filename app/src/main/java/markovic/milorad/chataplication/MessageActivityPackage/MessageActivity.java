@@ -16,10 +16,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
 import markovic.milorad.chataplication.ContactsActivityPackage.ContactsActivity;
 import markovic.milorad.chataplication.DatabasePackage.ContactDbHelper;
+import markovic.milorad.chataplication.HttpHelper;
 import markovic.milorad.chataplication.MainActivity;
 import markovic.milorad.chataplication.R;
+import markovic.milorad.chataplication.RegisterActivity;
 
 public class MessageActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
 
@@ -28,6 +35,10 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
     MessageAdapter adapter;
     int reciver;
     int sender;
+    String username;
+    String sessionid;
+
+    HttpHelper httpHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +46,8 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_message);
         reciver = Integer.parseInt(getIntent().getExtras().get(this.getString(R.string.BUNDLE_RECEIVER_ID)).toString());
         sender = Integer.parseInt(getIntent().getExtras().get(this.getString(R.string.BUNDLE_SENDER_ID)).toString());
+        username = getIntent().getExtras().getString(this.getString(R.string.BUNDLE_CONTACT_NAME));
+        sessionid = getIntent().getExtras().getString("sessionid");
 
         Button logout = findViewById(R.id.messageActButtonLogout);
         Button send = findViewById(R.id.messageActButtonSend);
@@ -83,7 +96,32 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.messageActButtonSend:
                 EditText msg = findViewById(R.id.messageActEditMessageText);
-                Message m = new Message(msg.getText().toString(), getResources().getColor(R.color.colorTurquoise), 1, 99, sender, reciver);
+                final Message m = new Message(msg.getText().toString(), getResources().getColor(R.color.colorTurquoise), 1, 99, sender, reciver);
+
+                httpHelper = new HttpHelper();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        JSONObject jsonObject = new JSONObject();
+                        try {
+                            jsonObject.put("receiver", username);
+                            jsonObject.put("data", m.getMessageText());
+                            Log.d("Debugging", "Sending Message");
+                            Log.d("Debugging", "Session id in MessageActivity is: " + sessionid + "\n" + "username in MessageActivity is:" + username + "\nnmessage in MessageActivity is: "+ m.getMessageText());
+                            final boolean success = httpHelper.postMessageJSONObjectFromURL(getResources().getString(R.string.BASE_URL) + "/message", jsonObject, sessionid).isSuccess();
+                            Log.d("Debugging", "Message sent!");
+
+                        } catch (JSONException e) {
+                            Log.d("Debugging", "JSONException happened");
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            Log.d("Debugging", "IOException happened");
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+
+
                 ContactDbHelper helper = new ContactDbHelper(this);
                 helper.insert(m);
                 Message[] messages = helper.readMessages(m.getSender_id(), m.getReceiver_id());

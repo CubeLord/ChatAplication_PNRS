@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import org.json.JSONArray;
@@ -53,9 +54,11 @@ public class ContactsActivity extends AppCompatActivity implements View.OnClickL
         Log.d("Debugging", "Session id in ContactsActivity: " + sessionid);
 
         Button logout = findViewById(R.id.contactsActButtonLogout);
+        ImageButton refresh = findViewById(R.id.contactsActRefreshButton);
+
         contactsActivity = this;
         list = findViewById(R.id.contactsActListView);
-        mAdapter = new ContactsAdapter(this, SharedPreff);
+        mAdapter = new ContactsAdapter(this, SharedPreff, sessionid);
         list.setAdapter(mAdapter);
 
         mdbHelper = new ContactDbHelper(this);
@@ -109,6 +112,7 @@ public class ContactsActivity extends AppCompatActivity implements View.OnClickL
 
         mAdapter.update(contacts);
         logout.setOnClickListener(this);
+        refresh.setOnClickListener(this);
     }
 
     public Contact[] removeLogedIn(Contact[] fullContacts, String User) {
@@ -145,6 +149,59 @@ public class ContactsActivity extends AppCompatActivity implements View.OnClickL
                 Intent mainActivity = new Intent(this, MainActivity.class);
                 startActivity(mainActivity);
                 finish();
+                break;
+            case R.id.contactsActRefreshButton:
+                Log.d("Debugging", "Refresh button pressed");
+                httpHelper = new HttpHelper();
+                handler = new Handler();
+
+                countDownLatch = new CountDownLatch(1);
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        JSONObject jsonObject = new JSONObject();
+                        try {
+                            jsonArray = httpHelper.getJSONContactsFromURL(getResources().getString(R.string.BASE_URL) + "/contacts", sessionid);
+                            countDownLatch.countDown();
+                        } catch (JSONException e) {
+                            Log.d("Debugging", "JSONException happened in ContactsActivity");
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            Log.d("Debugging", "IOException happened in ContactsActivity");
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                thread.start();
+                try {
+                    countDownLatch.await();
+                } catch (Exception e) {
+                    Log.d("Debugging", "CountDownLatch exception happened!");
+                }
+
+                try {
+                    contacts = new Contact[jsonArray.length()];
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        contacts[i] = new Contact(jsonArray.getJSONObject(i).getString("username"), "fn", "ls", 66);
+                    }
+                } catch (Exception e) {
+                    Log.d("Debugging", "Cought Exception Reading JSONArray");
+                }
+
+//        Log.d("Debugging", "Before RemovedLogedin");
+                Contact[] cArray = mdbHelper.readContacts();
+//        Contact[] cArray = removeLogedIn(ocArray, "Cube.Lord");
+//        Log.d("Debugging", "After RemovedLogedin");
+                for (int i = 0; i < cArray.length; i++) {
+                    mdbHelper.deleteContact(cArray[i].name);
+                }
+                for (int i = 0; i < contacts.length; i++) {
+                    mdbHelper.insert(contacts[i]);
+                }
+
+
+                Contact[] contacts = mdbHelper.readContacts();
+                mAdapter.update(contacts);
                 break;
         }
     }

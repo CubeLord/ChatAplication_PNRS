@@ -28,7 +28,6 @@ public class HttpHelper {
         /*header fields*/
         urlConnection.setRequestMethod("GET");
         urlConnection.setRequestProperty("Accept", "contacts/json");
-        //urlConnection.setRequestProperty ("Authorization", sessionID);
         urlConnection.setRequestProperty("sessionid", sessionid);
         urlConnection.setReadTimeout(10000 /* milliseconds */);
         urlConnection.setConnectTimeout(15000 /* milliseconds */);
@@ -146,6 +145,41 @@ public class HttpHelper {
         return (httpHelperReturn);
     }
 
+    public HttpHelperReturn postMessageJSONObjectFromURL(String urlString, JSONObject jsonObject, String sessionid) throws IOException, JSONException {
+        HttpURLConnection urlConnection = null;
+        URL url = new URL(urlString);
+        urlConnection = (HttpURLConnection) url.openConnection();
+        urlConnection.setRequestMethod("POST");
+        urlConnection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+        urlConnection.setRequestProperty("sessionid", sessionid);
+        urlConnection.setRequestProperty("Accept", "application/json");
+        /* needed when used POST or PUT methods */
+        urlConnection.setDoOutput(true);
+        urlConnection.setDoInput(true);
+        try {
+            urlConnection.connect();
+        } catch (IOException e) {
+            Log.d("Debugging", "IOException in postJSONObjectFromURL");
+            httpHelperReturn = new HttpHelperReturn();
+            httpHelperReturn.setSuccess(false);
+            return httpHelperReturn;
+        }
+
+        DataOutputStream os = new DataOutputStream(urlConnection.getOutputStream());
+        /* write json object */
+        os.writeBytes(jsonObject.toString());
+        os.flush();
+        os.close();
+        int responseCode = urlConnection.getResponseCode();
+        Log.d("Debugging", Integer.toString(urlConnection.getResponseCode()));
+        Log.i("STATUS", String.valueOf(urlConnection.getResponseMessage()));
+        Log.i("MSG", urlConnection.getResponseMessage());
+        urlConnection.disconnect();
+        httpHelperReturn = new HttpHelperReturn();
+        httpHelperReturn.setSuccess(responseCode == SUCCESS);
+        httpHelperReturn.setSessionid(urlConnection.getHeaderField("sessionid"));
+        return (httpHelperReturn);
+    }
 
     /*HTTP delete*/
     public boolean httpDelete(String urlString) throws IOException, JSONException {

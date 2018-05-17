@@ -23,11 +23,13 @@ public class ContactsAdapter extends BaseAdapter {
     ArrayList<Contact> list;
     Context context;
     int sender;
+    String ssesionid;
 
-    ContactsAdapter(Context c, int sender_id) {
+    ContactsAdapter(Context c, int sender_id, String session) {
         context = c;
         sender = sender_id;
         list = new ArrayList<Contact>();
+        ssesionid = session;
 
 /*
         Resources res = context.getResources();
@@ -93,6 +95,7 @@ public class ContactsAdapter extends BaseAdapter {
                 bundle.putString(context.getString(R.string.BUNDLE_CONTACT_NAME), contact.name);
                 bundle.putString(context.getString(R.string.BUNDLE_RECEIVER_ID), Integer.toString(contact.getId()));
                 bundle.putString(context.getString(R.string.BUNDLE_SENDER_ID), Integer.toString(sender));
+                bundle.putString("sessionid", ssesionid);
                 Intent messageAct = new Intent(context, MessageActivity.class);
                 messageAct.putExtras(bundle);
 
