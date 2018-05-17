@@ -16,8 +16,44 @@ import java.net.URL;
 public class HttpHelper {
 
     private static final int SUCCESS = 200;
+    HttpHelperReturn httpHelperReturn;
 
     /*HTTP get json Array*/
+
+    public JSONArray getJSONContactsFromURL(String urlString, String sessionid) throws IOException, JSONException {
+        Log.i("TEST3", " " + "////");
+        HttpURLConnection urlConnection = null;
+        URL url = new URL(urlString);
+        urlConnection = (HttpURLConnection) url.openConnection();
+        /*header fields*/
+        urlConnection.setRequestMethod("GET");
+        urlConnection.setRequestProperty("Accept", "contacts/json");
+        //urlConnection.setRequestProperty ("Authorization", sessionID);
+        urlConnection.setRequestProperty("sessionid", sessionid);
+        urlConnection.setReadTimeout(10000 /* milliseconds */);
+        urlConnection.setConnectTimeout(15000 /* milliseconds */);
+        try {
+            urlConnection.connect();
+        } catch (IOException e) {
+            return null;
+        }
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = br.readLine()) != null) {
+            sb.append(line + "\n");
+            Log.d("Debugging", line);
+        }
+        br.close();
+
+        String jsonString = sb.toString();
+        int responseCode = urlConnection.getResponseCode();
+        urlConnection.disconnect();
+        return responseCode == SUCCESS ? new JSONArray(jsonString) : null;
+    }
+
+
     public JSONArray getJSONArrayFromURL(String urlString) throws IOException, JSONException {
         HttpURLConnection urlConnection = null;
         java.net.URL url = new URL(urlString);
@@ -25,8 +61,8 @@ public class HttpHelper {
         /*header fields*/
         urlConnection.setRequestMethod("GET");
         urlConnection.setRequestProperty("Accept", "application/json");
-        urlConnection.setReadTimeout(10000 /* milliseconds */ );
-        urlConnection.setConnectTimeout(15000 /* milliseconds */ );
+        urlConnection.setReadTimeout(10000 /* milliseconds */);
+        urlConnection.setConnectTimeout(15000 /* milliseconds */);
         try {
             urlConnection.connect();
         } catch (IOException e) {
@@ -41,7 +77,7 @@ public class HttpHelper {
         br.close();
         String jsonString = sb.toString();
         Log.d("HTTP GET", "JSON data- " + jsonString);
-        int responseCode =  urlConnection.getResponseCode();
+        int responseCode = urlConnection.getResponseCode();
         urlConnection.disconnect();
         return responseCode == SUCCESS ? new JSONArray(jsonString) : null;
     }
@@ -54,8 +90,8 @@ public class HttpHelper {
         /*header fields*/
         urlConnection.setRequestMethod("GET");
         urlConnection.setRequestProperty("Accept", "application/json");
-        urlConnection.setReadTimeout(10000 /* milliseconds */ );
-        urlConnection.setConnectTimeout(15000 /* milliseconds */ );
+        urlConnection.setReadTimeout(10000 /* milliseconds */);
+        urlConnection.setConnectTimeout(15000 /* milliseconds */);
         try {
             urlConnection.connect();
         } catch (IOException e) {
@@ -71,18 +107,18 @@ public class HttpHelper {
 
         String jsonString = sb.toString();
         Log.d("HTTP GET", "JSON obj- " + jsonString);
-        int responseCode =  urlConnection.getResponseCode();
+        int responseCode = urlConnection.getResponseCode();
         urlConnection.disconnect();
         return responseCode == SUCCESS ? new JSONObject(jsonString) : null;
     }
 
-    public boolean postJSONObjectFromURL(String urlString, JSONObject jsonObject) throws IOException, JSONException {
+    public HttpHelperReturn postJSONObjectFromURL(String urlString, JSONObject jsonObject) throws IOException, JSONException {
         HttpURLConnection urlConnection = null;
-        URL url  = new URL(urlString);
+        URL url = new URL(urlString);
         urlConnection = (HttpURLConnection) url.openConnection();
         urlConnection.setRequestMethod("POST");
         urlConnection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-        urlConnection.setRequestProperty("Accept","application/json");
+        urlConnection.setRequestProperty("Accept", "application/json");
         /* needed when used POST or PUT methods */
         urlConnection.setDoOutput(true);
         urlConnection.setDoInput(true);
@@ -90,7 +126,9 @@ public class HttpHelper {
             urlConnection.connect();
         } catch (IOException e) {
             Log.d("Debugging", "IOException in postJSONObjectFromURL");
-            return false;
+            httpHelperReturn = new HttpHelperReturn();
+            httpHelperReturn.setSuccess(false);
+            return httpHelperReturn;
         }
 
         DataOutputStream os = new DataOutputStream(urlConnection.getOutputStream());
@@ -102,7 +140,10 @@ public class HttpHelper {
         Log.i("STATUS", String.valueOf(urlConnection.getResponseMessage()));
         Log.i("MSG", urlConnection.getResponseMessage());
         urlConnection.disconnect();
-        return (responseCode==SUCCESS);
+        httpHelperReturn = new HttpHelperReturn();
+        httpHelperReturn.setSuccess(responseCode == SUCCESS);
+        httpHelperReturn.setSessionid(urlConnection.getHeaderField("sessionid"));
+        return (httpHelperReturn);
     }
 
 
@@ -113,7 +154,7 @@ public class HttpHelper {
         urlConnection = (HttpURLConnection) url.openConnection();
         urlConnection.setRequestMethod("DELETE");
         urlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-        urlConnection.setRequestProperty("Accept","application/json");
+        urlConnection.setRequestProperty("Accept", "application/json");
         try {
             urlConnection.connect();
         } catch (IOException e) {
@@ -122,8 +163,8 @@ public class HttpHelper {
         int responseCode = urlConnection.getResponseCode();
 
         Log.i("STATUS", String.valueOf(responseCode));
-        Log.i("MSG" , urlConnection.getResponseMessage());
+        Log.i("MSG", urlConnection.getResponseMessage());
         urlConnection.disconnect();
-        return (responseCode==SUCCESS);
+        return (responseCode == SUCCESS);
     }
 }

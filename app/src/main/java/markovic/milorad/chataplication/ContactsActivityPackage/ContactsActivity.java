@@ -2,13 +2,22 @@ package markovic.milorad.chataplication.ContactsActivityPackage;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.concurrent.CountDownLatch;
+
 import markovic.milorad.chataplication.DatabasePackage.ContactDbHelper;
+import markovic.milorad.chataplication.HttpHelper;
 import markovic.milorad.chataplication.MainActivity;
 import markovic.milorad.chataplication.R;
 
@@ -18,14 +27,20 @@ public class ContactsActivity extends AppCompatActivity implements View.OnClickL
     public static ContactsAdapter mAdapter;
     public static ContactDbHelper mdbHelper;
     public int SharedPreff;
+    HttpHelper httpHelper;
+    String sessionid;
     ListView list;
+    Handler handler;
+    Contact[] contacts;
+    CountDownLatch countDownLatch;
+    JSONArray jsonArray;
 
     @Override
     protected void onResume() {
         super.onResume();
 
         Contact[] contacts = mdbHelper.readContacts();
-        mAdapter.update(removeLogedIn(contacts));
+        mAdapter.update(contacts);
     }
 
     @Override
@@ -34,6 +49,8 @@ public class ContactsActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_contacts);
 
         SharedPreff = Integer.parseInt(getIntent().getExtras().getString("Login_ID"));
+        sessionid = getIntent().getExtras().getString("Session_ID");
+        Log.d("Debugging", "Session id in ContactsActivity: " + sessionid);
 
         Button logout = findViewById(R.id.contactsActButtonLogout);
         contactsActivity = this;
@@ -43,32 +60,81 @@ public class ContactsActivity extends AppCompatActivity implements View.OnClickL
 
         mdbHelper = new ContactDbHelper(this);
 
-/*        Contact c = new Contact("CubeLord", "Milorad", "Markovic", 0);
-        mdbHelper.insert(c);
-        Contact s = new Contact("SuncevoDete", "Jelena", "Boroja", 1);
-        mdbHelper.insert(s);
-        Contact i = new Contact("IskeCode", "Vesna", "Isic", 3);
-        mdbHelper.insert(i);*/
+        httpHelper = new HttpHelper();
+        Contact[] contactsAll;
+        handler = new Handler();
+        countDownLatch = new CountDownLatch(1);
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonArray = httpHelper.getJSONContactsFromURL(getResources().getString(R.string.BASE_URL) + "/contacts", sessionid);
+                    countDownLatch.countDown();
+                } catch (JSONException e) {
+                    Log.d("Debugging", "JSONException happened in ContactsActivity");
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    Log.d("Debugging", "IOException happened in ContactsActivity");
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+        try {
+            countDownLatch.await();
+        } catch (Exception e) {
+            Log.d("Debugging", "CountDownLatch exception happened!");
+        }
 
+        try {
+            contacts = new Contact[jsonArray.length()];
+            for (int i = 0; i < jsonArray.length(); i++) {
+                contacts[i] = new Contact(jsonArray.getJSONObject(i).getString("username"), "fn", "ls", 66);
+            }
+        } catch (Exception e) {
+            Log.d("Debugging", "Cought Exception Reading JSONArray");
+        }
+
+//        Log.d("Debugging", "Before RemovedLogedin");
         Contact[] cArray = mdbHelper.readContacts();
-        mAdapter.update(removeLogedIn(cArray));
+//        Contact[] cArray = removeLogedIn(ocArray, "Cube.Lord");
+//        Log.d("Debugging", "After RemovedLogedin");
+        for (int i = 0; i < cArray.length; i++) {
+            mdbHelper.deleteContact(cArray[i].name);
+        }
+        for (int i = 0; i < contacts.length; i++) {
+            mdbHelper.insert(contacts[i]);
+        }
 
+        mAdapter.update(contacts);
         logout.setOnClickListener(this);
     }
 
-    public Contact[] removeLogedIn(Contact[] fullContacts) {
-        if (SharedPreff == -1) return fullContacts;
+    public Contact[] removeLogedIn(Contact[] fullContacts, String User) {
+        if (User == "") return fullContacts;
+//        TODO: Fix removeLogedIn function to work with Server
+
 
         Contact[] ncArray = new Contact[fullContacts.length - 1];
         int x = 0;
+        Log.d("Debugging", "REMOVELOGEDIN - 0");
         for (int j = 0; j < fullContacts.length; j++) {
-            if (fullContacts[j].getId() != SharedPreff) {
+            if (fullContacts[j].getName() != User) {
+                Log.d("Debugging", "REMOVELOGEDIN - " + fullContacts[j].getName());
+
                 ncArray[x] = fullContacts[j];
                 x++;
+
+            } else {
+                Log.d("Debugging", "REMOVELOGEDIN - 11");
+
             }
         }
+        Log.d("Debugging", "REMOVELOGEDIN - 10");
+        return fullContacts;
 
-        return ncArray;
+//        return ncArray;
     }
 
     @Override

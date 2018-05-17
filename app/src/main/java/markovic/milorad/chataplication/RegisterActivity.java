@@ -88,20 +88,20 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     jsonObject.put("username", username.getText().toString());
                     jsonObject.put("password", password.getText().toString());
                     jsonObject.put("email", email.getText().toString());
-                    final boolean success = httpHelper.postJSONObjectFromURL(getResources().getString(R.string.BASE_URL) + "/register", jsonObject);
+                    final boolean success = httpHelper.postJSONObjectFromURL(getResources().getString(R.string.BASE_URL) + "/register", jsonObject).isSuccess();
                     handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(RegisterActivity.this, "Adding new user: " + success, Toast.LENGTH_LONG).show();
+                        @Override
+                        public void run() {
+                            Toast.makeText(RegisterActivity.this, "Adding new user: " + success, Toast.LENGTH_LONG).show();
+                        }
+                    });
+                } catch (JSONException e) {
+                    Log.d("Debugging", "JSONException happened");
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    Log.d("Debugging", "IOException happened");
+                    e.printStackTrace();
                 }
-                });
-                    } catch (JSONException e) {
-                        Log.d("Debugging","JSONException happened");
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        Log.d("Debugging","IOException happened");
-                        e.printStackTrace();
-                    }
             }
         }).start();
 
