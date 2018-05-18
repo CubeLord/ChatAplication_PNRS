@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,8 +20,10 @@ import java.util.concurrent.CountDownLatch;
 
 import markovic.milorad.chataplication.DatabasePackage.ContactDbHelper;
 import markovic.milorad.chataplication.HttpHelper;
+import markovic.milorad.chataplication.HttpHelperReturn;
 import markovic.milorad.chataplication.MainActivity;
 import markovic.milorad.chataplication.R;
+import markovic.milorad.chataplication.RegisterActivity;
 
 public class ContactsActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -146,6 +149,36 @@ public class ContactsActivity extends AppCompatActivity implements View.OnClickL
         switch (view.getId()) {
             case R.id.contactsActButtonLogout:
                 Log.d(getResources().getString(R.string.BUTTON_LOG_TAG), getResources().getString(R.string.LOGOUT_BUTTON_LOG_MESSAGE));
+
+                Thread thread1 = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        JSONObject jsonObject = new JSONObject();
+                        try {
+                            final HttpHelperReturn httpHelperReturn = httpHelper.postlogoutJSONObjectFromURL(getResources().getString(R.string.BASE_URL) + "/logout", sessionid, ContactsActivity.this);
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(ContactsActivity.this, "Request Message: " + httpHelperReturn.getMessage() +"\nRequest Code: "+ Integer.toString(httpHelperReturn.getCode()), Toast.LENGTH_LONG).show();
+                                }
+                            });
+                            countDownLatch.countDown();
+                        } catch (JSONException e) {
+                            Log.d("Debugging", "JSONException happened in ContactsActivity");
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            Log.d("Debugging", "IOException happened in ContactsActivity");
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                thread1.start();
+                try {
+                    countDownLatch.await();
+                } catch (Exception e) {
+                    Log.d("Debugging", "CountDownLatch exception happened!");
+                }
+
                 Intent mainActivity = new Intent(this, MainActivity.class);
                 startActivity(mainActivity);
                 finish();

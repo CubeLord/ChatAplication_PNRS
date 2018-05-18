@@ -20,6 +20,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 
+import markovic.milorad.chataplication.ContactsActivityPackage.Contact;
 import markovic.milorad.chataplication.ContactsActivityPackage.ContactsActivity;
 import markovic.milorad.chataplication.DatabasePackage.ContactDbHelper;
 
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Toast toast;
     private Handler handler;
     private HttpHelper httpHelper;
+    HttpHelperReturn httpHelperReturn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,18 +83,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         try {
                             jsonObject.put("username", username.getText().toString());
                             jsonObject.put("password", password.getText().toString());
-                            HttpHelperReturn httpHelperReturn = (httpHelper.postJSONObjectFromURL(getResources().getString(R.string.BASE_URL) + "/login", jsonObject));
+                             httpHelperReturn = (httpHelper.postJSONObjectFromURL(getResources().getString(R.string.BASE_URL) + "/login", jsonObject, MainActivity.this));
                             final boolean success = httpHelperReturn.isSuccess();
                             Log.d("Debugging", "SessionID in MainActivity: " + httpHelperReturn.getSessionid());
                             sessionid[0] = httpHelperReturn.getSessionid();
-                            countDownLatch.countDown();
 
                             handler.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(MainActivity.this, "Login successful: " + success, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(MainActivity.this, "Request Message: " + httpHelperReturn.getMessage() +"\nRequest Code: "+ Integer.toString(httpHelperReturn.getCode()), Toast.LENGTH_LONG).show();
                                 }
                             });
+                            countDownLatch.countDown();
                         } catch (JSONException e) {
                             Log.d("Debugging", "JSONException happened");
                             e.printStackTrace();
@@ -105,6 +107,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 thread.start();
                 try {
                     countDownLatch.await();
+                    if (httpHelperReturn.getCode() != 200) {
+                        Log.d("Debugging", "Code is: "+ httpHelperReturn.getCode());
+                        IOException e = new IOException();
+                        throw e;
+                    }
                     int id = cursor.getInt(cursor.getColumnIndex(getResources().getString(R.string.COLUMN_CONTACT_ID)));
                     Intent contacts = new Intent(this, ContactsActivity.class);
                     Bundle b = new Bundle();
