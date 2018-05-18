@@ -269,23 +269,31 @@ public class HttpHelper {
 
 
     /*HTTP delete*/
-    public boolean httpDelete(String urlString) throws IOException, JSONException {
+    public HttpHelperReturn httpDelete(String urlString, String sessionid) throws IOException, JSONException {
         HttpURLConnection urlConnection = null;
         java.net.URL url = new URL(urlString);
+        httpHelperReturn = new HttpHelperReturn();
         urlConnection = (HttpURLConnection) url.openConnection();
         urlConnection.setRequestMethod("DELETE");
+        urlConnection.setRequestProperty("sessionid", sessionid);
         urlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
         urlConnection.setRequestProperty("Accept", "application/json");
         try {
             urlConnection.connect();
         } catch (IOException e) {
-            return false;
+            httpHelperReturn.setSuccess(false);
+            return httpHelperReturn;
         }
         int responseCode = urlConnection.getResponseCode();
+        Log.d("Debugging", "Response code in Delete: "+ Integer.toString(urlConnection.getResponseCode()));
 
         Log.i("STATUS", String.valueOf(responseCode));
         Log.i("MSG", urlConnection.getResponseMessage());
+        httpHelperReturn.setSuccess(responseCode == SUCCESS);
+        httpHelperReturn.setCode(responseCode);
+        httpHelperReturn.setMessage(urlConnection.getResponseMessage());
         urlConnection.disconnect();
-        return (responseCode == SUCCESS);
+
+        return (httpHelperReturn);
     }
 }

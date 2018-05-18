@@ -67,7 +67,6 @@ public class ContactsActivity extends AppCompatActivity implements View.OnClickL
         mdbHelper = new ContactDbHelper(this);
 
         httpHelper = new HttpHelper();
-        Contact[] contactsAll;
         handler = new Handler();
         countDownLatch = new CountDownLatch(1);
         Thread thread = new Thread(new Runnable() {

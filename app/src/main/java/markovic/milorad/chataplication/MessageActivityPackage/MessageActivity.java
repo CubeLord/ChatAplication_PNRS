@@ -67,7 +67,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
 
         final ContactDbHelper helper = new ContactDbHelper(this);
         countDownLatch = new CountDownLatch(1);
-//        Log.d("Debugging", "Where is error- 0");
+        Log.d("Debugging", "Where is error- 0");
 //        new Thread(new Runnable() {
 //            @Override
 //            public void run() {
@@ -89,6 +89,8 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
 //                } catch (IOException e) {
 //                    Log.d("Debugging", "IOException happened");
 //                    e.printStackTrace();
+//                } catch (Exception e) {
+//                    Log.d("Debugging", "Exception happened");
 //                }
 //            }
 //        }).start();
@@ -97,6 +99,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
 //            countDownLatch.await();
 //        } catch (Exception e) {
 //            //ignore
+//            Log.d("Debugging", "Exception happened in the countDownLatch");
 //        }
         Message[] messages = helper.readMessages(sender, reciver);
         if (messages != null) {
