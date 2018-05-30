@@ -126,9 +126,9 @@ public class ContactsAdapter extends BaseAdapter {
                     public void run() {
                         JSONObject jsonObject = new JSONObject();
                         try {
+                            Log.d("Debugging", context.getResources().getString(R.string.BASE_URL) + "/contact/" + holder.getName().getText().toString());
                             final HttpHelperReturn httpHelperReturn = httpHelper.httpDelete(context.getResources().getString(R.string.BASE_URL) + "/contact/" + holder.getName().getText().toString(), ssesionid);
                             final boolean success = httpHelperReturn.isSuccess();
-                            Log.d("Debugging", "Prosli smo Delete - 0");
                             handler.post(new Runnable() {
                                 @Override
                                 public void run() {

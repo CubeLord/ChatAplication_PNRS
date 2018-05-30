@@ -56,65 +56,6 @@ public class HttpHelper {
         return responseCode == SUCCESS ? new JSONArray(jsonString) : null;
     }
 
-
-    public JSONArray getJSONArrayFromURL(String urlString) throws IOException, JSONException {
-        HttpURLConnection urlConnection = null;
-        java.net.URL url = new URL(urlString);
-        urlConnection = (HttpURLConnection) url.openConnection();
-        /*header fields*/
-        urlConnection.setRequestMethod("GET");
-        urlConnection.setRequestProperty("Accept", "application/json");
-        urlConnection.setReadTimeout(10000 /* milliseconds */);
-        urlConnection.setConnectTimeout(15000 /* milliseconds */);
-        try {
-            urlConnection.connect();
-        } catch (IOException e) {
-            return null;
-        }
-        BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = br.readLine()) != null) {
-            sb.append(line + "\n");
-        }
-        br.close();
-        String jsonString = sb.toString();
-        Log.d("HTTP GET", "JSON data- " + jsonString);
-        int responseCode = urlConnection.getResponseCode();
-        urlConnection.disconnect();
-        return responseCode == SUCCESS ? new JSONArray(jsonString) : null;
-    }
-
-    /*HTTP get json object*/
-    public JSONObject getJSONObjectFromURL(String urlString) throws IOException, JSONException {
-        HttpURLConnection urlConnection = null;
-        java.net.URL url = new URL(urlString);
-        urlConnection = (HttpURLConnection) url.openConnection();
-        /*header fields*/
-        urlConnection.setRequestMethod("GET");
-        urlConnection.setRequestProperty("Accept", "application/json");
-        urlConnection.setReadTimeout(10000 /* milliseconds */);
-        urlConnection.setConnectTimeout(15000 /* milliseconds */);
-        try {
-            urlConnection.connect();
-        } catch (IOException e) {
-            return null;
-        }
-        BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = br.readLine()) != null) {
-            sb.append(line + "\n");
-        }
-        br.close();
-
-        String jsonString = sb.toString();
-        Log.d("HTTP GET", "JSON obj- " + jsonString);
-        int responseCode = urlConnection.getResponseCode();
-        urlConnection.disconnect();
-        return responseCode == SUCCESS ? new JSONObject(jsonString) : null;
-    }
-
     public HttpHelperReturn postJSONObjectFromURL(String urlString, JSONObject jsonObject, Context context) throws IOException, JSONException {
         HttpURLConnection urlConnection = null;
         URL url = new URL(urlString);
@@ -234,37 +175,35 @@ public class HttpHelper {
 
 
     public JSONArray getJSONMessagesFromURL(String urlString, String sessionid) throws IOException, JSONException {
-        Log.d("Debugging", "Entered Messages method 0");
         HttpURLConnection urlConnection = null;
         URL url = new URL(urlString);
         urlConnection = (HttpURLConnection) url.openConnection();
-        Log.d("Debugging", "Entered Messages method 1");
         /*header fields*/
         urlConnection.setRequestMethod("GET");
         urlConnection.setRequestProperty("Accept", "contacts/json");
         urlConnection.setRequestProperty("sessionid", sessionid);
         urlConnection.setReadTimeout(10000 /* milliseconds */);
         urlConnection.setConnectTimeout(15000 /* milliseconds */);
-        Log.d("Debugging", "Entered Messages method 2");
         try {
             urlConnection.connect();
         } catch (IOException e) {
             return null;
         }
 
-//        BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-//        StringBuilder sb = new StringBuilder();
-//        String line;
-//        while ((line = br.readLine()) != null) {
-//            sb.append(line + "\n");
-//            Log.d("Debugging", line);
-//        }
-//        br.close();
+        BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = br.readLine()) != null) {
+            sb.append(line + "\n");
+            Log.d("Debugging", line);
+        }
+        br.close();
 
-//        String jsonString = sb.toString();
+        String jsonString = sb.toString();
+
         int responseCode = urlConnection.getResponseCode();
         urlConnection.disconnect();
-        return responseCode == SUCCESS ? null : null;
+        return responseCode == SUCCESS ? new JSONArray(jsonString) : null;
     }
 
 

@@ -24,6 +24,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 
+import markovic.milorad.chataplication.ContactsActivityPackage.Contact;
 import markovic.milorad.chataplication.ContactsActivityPackage.ContactsActivity;
 import markovic.milorad.chataplication.DatabasePackage.ContactDbHelper;
 import markovic.milorad.chataplication.HttpHelper;
@@ -37,7 +38,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
     Toast toast = null;
     ListView list;
     MessageAdapter adapter;
-    int reciver;
+    int receiver;
     int sender;
     String username;
     String sessionid;
@@ -45,12 +46,15 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
     HttpHelper httpHelper;
     Handler handler = new Handler();
     HttpHelperReturn httpHelperReturn;
+    JSONArray jsonArray;
+    Message[] messages;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
-        reciver = Integer.parseInt(getIntent().getExtras().get(this.getString(R.string.BUNDLE_RECEIVER_ID)).toString());
+        receiver = Integer.parseInt(getIntent().getExtras().get(this.getString(R.string.BUNDLE_RECEIVER_ID)).toString());
         sender = Integer.parseInt(getIntent().getExtras().get(this.getString(R.string.BUNDLE_SENDER_ID)).toString());
         username = getIntent().getExtras().getString(this.getString(R.string.BUNDLE_CONTACT_NAME));
         sessionid = getIntent().getExtras().getString("sessionid");
@@ -68,40 +72,56 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         final ContactDbHelper helper = new ContactDbHelper(this);
         countDownLatch = new CountDownLatch(1);
         Log.d("Debugging", "Where is error- 0");
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                JSONArray jsonArray = new JSONArray();
-//                try {
-//                    Log.d("Debugging", "Inside the Thread");
-//                    jsonArray = httpHelper.getJSONMessagesFromURL(getResources().getString(R.string.BASE_URL) + "/message/" + username, sessionid);
-//                    Log.d("Debugging", "after jsonArray asignment");
-//                    countDownLatch.countDown();
-////                    handler.post(new Runnable() {
-////                        @Override
-////                        public void run() {
-////                            Toast.makeText(RegisterActivity.this, "Adding new user: " + success, Toast.LENGTH_LONG).show();
-////                        }
-////                    });
-//                } catch (JSONException e) {
-//                    Log.d("Debugging", "JSONException happened");
-//                    e.printStackTrace();
-//                } catch (IOException e) {
-//                    Log.d("Debugging", "IOException happened");
-//                    e.printStackTrace();
-//                } catch (Exception e) {
-//                    Log.d("Debugging", "Exception happened");
-//                }
-//            }
-//        }).start();
-//        Log.d("Debugging", "Where is error- 1");
-//        try {
-//            countDownLatch.await();
-//        } catch (Exception e) {
-//            //ignore
-//            Log.d("Debugging", "Exception happened in the countDownLatch");
-//        }
-        Message[] messages = helper.readMessages(sender, reciver);
+
+        httpHelper = new HttpHelper();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                jsonArray = new JSONArray();
+                try {
+                    jsonArray = httpHelper.getJSONMessagesFromURL(getResources().getString(R.string.BASE_URL) + "/message/" + username, sessionid);
+                    countDownLatch.countDown();
+
+                } catch (JSONException e) {
+                    Log.d("Debugging", "JSONException happened");
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    Log.d("Debugging", "IOException happened");
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    Log.d("Debugging", "Exception happened");
+                }
+            }
+        }).start();
+        try {
+            countDownLatch.await();
+        } catch (Exception e) {
+            //ignore
+            Log.d("Debugging", "Exception happened in the countDownLatch");
+        }
+
+        try {
+            int x;
+            int color;
+            messages = new Message[jsonArray.length()];
+            String[] senders = new String[jsonArray.length()];
+            for (int i = 0; i < jsonArray.length(); i++) {
+                senders[i] = jsonArray.getJSONObject(i).getString("sender");
+                if(senders[i].equals(username)) {
+                    x = 0;
+                    color = getResources().getColor(R.color.colorLightGrey);
+                } else
+                {
+                    x = 1;
+                    color = getResources().getColor(R.color.colorTurquoise);
+                }
+                messages[i] = new Message(jsonArray.getJSONObject(i).getString("data"), color, x,i, 98, 97);
+            }
+        } catch (Exception e) {
+            Log.d("Debugging", "Cought Exception Reading JSONArray");
+        }
+
+
         if (messages != null) {
             adapter.update(messages);
         }
@@ -120,8 +140,6 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
 
         contactName.setText(getIntent().getExtras().get(this.getString(R.string.BUNDLE_CONTACT_NAME)).toString());
 
-        SQLiteDatabase db = helper.getReadableDatabase();
-
         messageText.addTextChangedListener(this);
         send.setOnClickListener(this);
         logout.setOnClickListener(this);
@@ -139,7 +157,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.messageActButtonSend:
                 EditText msg = findViewById(R.id.messageActEditMessageText);
-                final Message m = new Message(msg.getText().toString(), getResources().getColor(R.color.colorTurquoise), 1, 99, sender, reciver);
+                final Message m = new Message(msg.getText().toString(), getResources().getColor(R.color.colorTurquoise), 1, 99, sender, receiver);
 
                 httpHelper = new HttpHelper();
                 new Thread(new Runnable() {
@@ -149,11 +167,8 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
                         try {
                             jsonObject.put("receiver", username);
                             jsonObject.put("data", m.getMessageText());
-//                            Log.d("Debugging", "Sending Message");
-//                            Log.d("Debugging", "Session id in MessageActivity is: " + sessionid + "\n" + "username in MessageActivity is:" + username + "\nnmessage in MessageActivity is: "+ m.getMessageText());
                             httpHelperReturn = httpHelper.postMessageJSONObjectFromURL(getResources().getString(R.string.BASE_URL) + "/message", jsonObject, sessionid);
                             final boolean success = httpHelperReturn.isSuccess();
-//                            Log.d("Debugging", "Message sent!");
                             handler.post(new Runnable() {
                                 @Override
                                 public void run() {
