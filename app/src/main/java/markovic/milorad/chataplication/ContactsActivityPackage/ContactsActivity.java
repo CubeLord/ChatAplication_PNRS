@@ -24,6 +24,7 @@ import markovic.milorad.chataplication.HttpHelperReturn;
 import markovic.milorad.chataplication.MainActivity;
 import markovic.milorad.chataplication.R;
 import markovic.milorad.chataplication.RegisterActivity;
+import markovic.milorad.chataplication.ServicePackage.NotificationService;
 
 public class ContactsActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -53,8 +54,14 @@ public class ContactsActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_contacts);
 
         SharedPreff = Integer.parseInt(getIntent().getExtras().getString("Login_ID"));
+
         sessionid = getIntent().getExtras().getString("Session_ID");
         Log.d("Debugging", "Session id in ContactsActivity: " + sessionid);
+
+        //STARTING THE SERVICE
+        Intent intent = new Intent(this, NotificationService.class);
+        intent.putExtra("sessionid", sessionid);
+        startService(intent);
 
         Button logout = findViewById(R.id.contactsActButtonLogout);
         ImageButton refresh = findViewById(R.id.contactsActRefreshButton);
@@ -67,6 +74,22 @@ public class ContactsActivity extends AppCompatActivity implements View.OnClickL
         mdbHelper = new ContactDbHelper(this);
 
         httpHelper = new HttpHelper();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    httpHelper.getNotificationFromURL(getResources().getString(R.string.BASE_URL) + "/getfromservice", sessionid);
+                } catch (IOException e) {
+                    Log.d("Debugging", "IOException happened in ContactsActivity while checking notifications");
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+
+
+
         handler = new Handler();
         countDownLatch = new CountDownLatch(1);
         Thread thread = new Thread(new Runnable() {
@@ -148,6 +171,9 @@ public class ContactsActivity extends AppCompatActivity implements View.OnClickL
         switch (view.getId()) {
             case R.id.contactsActButtonLogout:
                 Log.d(getResources().getString(R.string.BUTTON_LOG_TAG), getResources().getString(R.string.LOGOUT_BUTTON_LOG_MESSAGE));
+
+                Intent intent = new Intent(this, NotificationService.class);
+                stopService(intent);
 
                 Thread thread1 = new Thread(new Runnable() {
                     @Override

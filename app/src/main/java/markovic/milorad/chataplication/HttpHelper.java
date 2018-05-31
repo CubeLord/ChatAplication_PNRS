@@ -235,4 +235,30 @@ public class HttpHelper {
 
         return (httpHelperReturn);
     }
+
+    public Boolean getNotificationFromURL(String urlString, String sessionid) throws IOException {
+        HttpURLConnection urlConnection = null;
+        URL url = new URL(urlString);
+        urlConnection = (HttpURLConnection) url.openConnection();
+        /*header fields*/
+        urlConnection.setRequestMethod("GET");
+        //urlConnection.setRequestProperty("Accept", "contacts/json");
+        urlConnection.setRequestProperty("sessionid", sessionid);
+        urlConnection.setReadTimeout(10000 /* milliseconds */);
+        urlConnection.setConnectTimeout(15000 /* milliseconds */);
+        try {
+            urlConnection.connect();
+        } catch (IOException e) {
+            return null;
+        }
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+        String line;
+        while ((line = br.readLine()) != null) {
+            Log.d("Debugging", "Got Notification: " + line);
+            return Boolean.valueOf(line);
+        }
+        br.close();
+        return false;
+    }
 }

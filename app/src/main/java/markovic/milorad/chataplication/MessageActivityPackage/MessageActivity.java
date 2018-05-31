@@ -32,6 +32,7 @@ import markovic.milorad.chataplication.HttpHelperReturn;
 import markovic.milorad.chataplication.MainActivity;
 import markovic.milorad.chataplication.R;
 import markovic.milorad.chataplication.RegisterActivity;
+import markovic.milorad.chataplication.ServicePackage.NotificationService;
 
 public class MessageActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
 
@@ -149,6 +150,9 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.messageActButtonLogout:
+                Intent intent = new Intent(this, NotificationService.class);
+                stopService(intent);
+
                 Log.d(getResources().getString(R.string.BUTTON_LOG_TAG), getResources().getString(R.string.LOGOUT_BUTTON_LOG_MESSAGE));
                 Intent main = new Intent(this, MainActivity.class);
                 ContactsActivity.contactsActivity.finish();
