@@ -23,6 +23,7 @@ import java.util.concurrent.CountDownLatch;
 import markovic.milorad.chataplication.ContactsActivityPackage.Contact;
 import markovic.milorad.chataplication.ContactsActivityPackage.ContactsActivity;
 import markovic.milorad.chataplication.DatabasePackage.ContactDbHelper;
+import markovic.milorad.chataplication.ServicePackage.NotificationService;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
 
@@ -41,6 +42,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+
+        //STARTING THE SERVICE
+        Intent intent = new Intent(this, NotificationService.class);
+        startService(intent);
 
         login = findViewById(R.id.mainActButtonLogin);
         register = findViewById(R.id.mainActButtonRegister);
