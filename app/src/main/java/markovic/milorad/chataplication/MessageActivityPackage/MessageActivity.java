@@ -118,7 +118,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
                     x = 1;
                     color = getResources().getColor(R.color.colorTurquoise);
                 }
-                messages[i] = new Message(ndk.decryptString(jsonArray.getJSONObject(i).getString("data"), getString(R.string.SERVER_ENCRYPTION_KEY)), color, x,i, 98, 97);
+                messages[i] = new Message(ndk.encryptString(jsonArray.getJSONObject(i).getString("data"), getString(R.string.SERVER_ENCRYPTION_KEY)), color, x,i, 98, 97);
             }
         } catch (Exception e) {
             Log.d("Debugging", "Cought Exception Reading JSONArray");
@@ -164,6 +164,11 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.messageActButtonSend:
                 EditText msg = findViewById(R.id.messageActEditMessageText);
                 final Message m = new Message(msg.getText().toString(), getResources().getColor(R.color.colorTurquoise), 1, 99, sender, receiver);
+                Log.d("Debugging", "Message is: " + msg.getText().toString() + "\n AND KEY IS: "+ getString(R.string.SERVER_ENCRYPTION_KEY));
+                Log.d("Debugging", "Encrypted Message is: " + ndk.encryptString(msg.getText().toString(), getString(R.string.SERVER_ENCRYPTION_KEY)));
+                Log.d("Debugging", "Decrypted Message is: " + ndk.encryptString(ndk.encryptString(msg.getText().toString(), getString(R.string.SERVER_ENCRYPTION_KEY)), getString(R.string.SERVER_ENCRYPTION_KEY)));
+
+//                Log.d("Debugging", "Encrypted Message is: " + ndk.encryptString("SomethingS", "SomethingKey"));
 
                 httpHelper = new HttpHelper();
                 new Thread(new Runnable() {
@@ -173,6 +178,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
                         try {
                             jsonObject.put("receiver", username);
                             jsonObject.put("data", ndk.encryptString(m.getMessageText(), getString(R.string.SERVER_ENCRYPTION_KEY)));
+//                            jsonObject.put("data", m.getMessageText());
                             httpHelperReturn = httpHelper.postMessageJSONObjectFromURL(getResources().getString(R.string.BASE_URL) + "/message", jsonObject, sessionid);
                             final boolean success = httpHelperReturn.isSuccess();
                             handler.post(new Runnable() {
