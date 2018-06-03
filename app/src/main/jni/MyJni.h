@@ -15,6 +15,22 @@ extern "C" {
 JNIEXPORT jstring JNICALL Java_markovic_milorad_chataplication_NdkPackage_MyNDK_getMyString
   (JNIEnv *, jobject);
 
+/*
+ * Class:     markovic_milorad_chataplication_NdkPackage_MyNDK
+ * Method:    encryptString
+ * Signature: (Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_markovic_milorad_chataplication_NdkPackage_MyNDK_encryptString
+  (JNIEnv *, jobject, jstring, jstring);
+
+/*
+ * Class:     markovic_milorad_chataplication_NdkPackage_MyNDK
+ * Method:    decryptString
+ * Signature: (Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_markovic_milorad_chataplication_NdkPackage_MyNDK_decryptString
+  (JNIEnv *, jobject, jstring, jstring);
+
 #ifdef __cplusplus
 }
 #endif

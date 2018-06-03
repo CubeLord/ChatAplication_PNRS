@@ -23,6 +23,7 @@ import java.util.concurrent.CountDownLatch;
 import markovic.milorad.chataplication.ContactsActivityPackage.Contact;
 import markovic.milorad.chataplication.ContactsActivityPackage.ContactsActivity;
 import markovic.milorad.chataplication.DatabasePackage.ContactDbHelper;
+import markovic.milorad.chataplication.NdkPackage.MyNDK;
 import markovic.milorad.chataplication.ServicePackage.NotificationService;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {

@@ -1,0 +1,9 @@
+JNI
+
+javah -classpath app/build/intermediates/classes/debug;C:\Programming\Android\SDK\Sdk\platforms\android-27\android.jar -o app\src\main\jni\MyJni.h markovic.milorad.chataplication.NdkPackage.MyNDK
+
+
+
+NDK
+
+ndk-build NDK_APPLICATION_MK=app/src/main/jni/Application.mk NDK_PROJECT_PATH=app/src/main

@@ -47,6 +47,7 @@
     <string name="COLUMN_USERNAME">Username</string>
     <string name="COLUMN_FIRSTNAME">Firstname</string>
     <string name="COLUMN_LASTNAME">Lastname</string>
+    <string name="SERVER_ENCRYPTION_KEY">This is the key</string>
 
     <string name="BASE_URL">http://18.205.194.168:80</string>
     <string name="REGISTER_EXTENSION">/register</string>

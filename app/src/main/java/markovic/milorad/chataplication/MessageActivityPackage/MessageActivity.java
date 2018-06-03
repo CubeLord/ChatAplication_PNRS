@@ -30,6 +30,7 @@ import markovic.milorad.chataplication.DatabasePackage.ContactDbHelper;
 import markovic.milorad.chataplication.HttpHelper;
 import markovic.milorad.chataplication.HttpHelperReturn;
 import markovic.milorad.chataplication.MainActivity;
+import markovic.milorad.chataplication.NdkPackage.MyNDK;
 import markovic.milorad.chataplication.R;
 import markovic.milorad.chataplication.RegisterActivity;
 import markovic.milorad.chataplication.ServicePackage.NotificationService;
@@ -49,6 +50,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
     HttpHelperReturn httpHelperReturn;
     JSONArray jsonArray;
     Message[] messages;
+    MyNDK ndk = new MyNDK();
 
 
     @Override
@@ -116,7 +118,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
                     x = 1;
                     color = getResources().getColor(R.color.colorTurquoise);
                 }
-                messages[i] = new Message(jsonArray.getJSONObject(i).getString("data"), color, x,i, 98, 97);
+                messages[i] = new Message(ndk.decryptString(jsonArray.getJSONObject(i).getString("data"), getString(R.string.SERVER_ENCRYPTION_KEY)), color, x,i, 98, 97);
             }
         } catch (Exception e) {
             Log.d("Debugging", "Cought Exception Reading JSONArray");
@@ -170,7 +172,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
                         JSONObject jsonObject = new JSONObject();
                         try {
                             jsonObject.put("receiver", username);
-                            jsonObject.put("data", m.getMessageText());
+                            jsonObject.put("data", ndk.encryptString(m.getMessageText(), getString(R.string.SERVER_ENCRYPTION_KEY)));
                             httpHelperReturn = httpHelper.postMessageJSONObjectFromURL(getResources().getString(R.string.BASE_URL) + "/message", jsonObject, sessionid);
                             final boolean success = httpHelperReturn.isSuccess();
                             handler.post(new Runnable() {
